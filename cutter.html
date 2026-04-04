@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Cutter Configurator | Cookies & Charms</title>
     
-    <!-- MailerLite Universal Script -->
+    <!-- MailerLite Universal -->
     <script>
-        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-        n=d.getElementsByTagName(e),n.parentNode.insertBefore(l,n);})
-        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-        ml('account', 'YOUR_ACCOUNT_ID_HERE'); 
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '347826');
     </script>
+<!-- End MailerLite Universal -->
 
     <style>
         /* CSS variables scoped to the app container to avoid website interference */
@@ -38,11 +39,13 @@
             position: relative;
         }
 
-        #cc-builder-app * {
+         #cc-builder-app * {
             box-sizing: border-box;
         }
 
         #cc-builder-app .header { text-align: center; margin-bottom: 20px; }
+        #cc-builder-app .header .logo-link { display: inline-block; margin-bottom: 15px; }
+        #cc-builder-app .header .logo-img { max-width: 180px; height: auto; display: block; margin: 0 auto; }
         #cc-builder-app .header h1 { color: var(--cc-primary); font-size: 1.8rem; margin: 0; }
         #cc-builder-app .header p { font-size: 0.95rem; color: #666; margin-top: 5px; }
 
@@ -98,8 +101,8 @@
         #cc-builder-app h2 { font-size: 1.1rem; color: var(--cc-primary); border-left: 4px solid var(--cc-primary); padding-left: 10px; margin: 25px 0 15px; }
 
         /* Grid Selection */
-        #cc-builder-app .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        #cc-builder-app .option-card {
+        #cc-builder-app .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
+         #cc-builder-app .option-card {
             border: 2px solid #eee;
             border-radius: 15px;
             overflow: hidden;
@@ -108,8 +111,11 @@
             background: white;
             text-align: center;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #cc-builder-app .option-card img { width: 100%; height: 120px; object-fit: cover; background: #f0f0f0; display: block; pointer-events: none; }
+        #cc-builder-app .option-card img { width: 100%; height: 200px; object-fit: contain; background: #f0f0f0; display: block; pointer-events: none; }
         #cc-builder-app .option-card .label { padding: 10px; font-size: 0.85rem; font-weight: 600; color: #555; line-height: 1.2; pointer-events: none; }
         #cc-builder-app .option-card:hover { border-color: var(--cc-accent); }
         #cc-builder-app .option-card.selected { border-color: var(--cc-primary); background: var(--cc-primary-light); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -154,7 +160,7 @@
         #cc-builder-app .info-box.vertical { flex-direction: column; align-items: center; text-align: center; }
         #cc-builder-app .info-box img { border-radius: 8px; object-fit: contain; background: white; flex-shrink: 0; }
         #cc-builder-app .info-box.horizontal img { width: 80px; height: 80px; }
-        #cc-builder-app .info-box.vertical img { width: 100%; max-width: 450px; height: auto; }
+        #cc-builder-app .info-box.vertical img { width: auto; max-width: 70%; max-height: 200px; height: auto; }
         #cc-builder-app .info-box p { margin: 0; font-size: 0.85rem; line-height: 1.4; color: var(--cc-primary-dark); }
 
         /* Accordion Style */
@@ -183,7 +189,7 @@
         #cc-builder-app .btn-back { background: #eee; color: #666; }
         #cc-builder-app .btn-whatsapp { background: #25D366; color: white; }
         #cc-builder-app .btn-email { background: #EA4335; color: white; }
-        #cc-builder-app .btn-copy { background: #555; color: white; }
+        #cc-builder-app .btn-copy  { background: var(--cc-primary); color: white; }
         #cc-builder-app .btn:hover { filter: brightness(90%); }
 
         #cc-builder-app .summary-area {
@@ -208,7 +214,10 @@
 
 <div id="cc-builder-app">
     <div class="header">
-        <h1>Cutter Configurator</h1>
+        <a href="https://cookiesandcharms.com/" target="_blank" class="logo-link">
+            <img src="https://cdn.store-assets.com/s/520532/f/5498264.png" alt="Cookies & Charms Logo" class="logo-img">
+        </a>
+        <h1>Custom Your Cutter</h1>
         <p>Customize your baking & crafting tools</p>
     </div>
 
@@ -229,7 +238,7 @@
         <h2>Section 1: Cutter Type</h2>
         
         <div class="input-group">
-            <label>Part 1: I am using it for...</label>
+            <label>Part 1: I am using it with...</label>
             <select id="usageType" onchange="checkOtherUsage(this.value)">
                 <option value="Cookie Dough">Cookie Dough</option>
                 <option value="Fondant">Fondant</option>
@@ -242,35 +251,35 @@
         <label><strong>Part 2: Select Cutter Style</strong></label>
         <div class="options-grid">
             <div class="option-card" data-type="type" data-value="Outline Cutter Only" onclick="selectCutterStyle(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Outline">
-                <div class="label">Outline Cutter Only</div>
+                <img src="https://cdn.store-assets.com/s/520532/f/12964494.png" alt="Outline">
+                <div class="label">Cutter (Outline) Only</div>
             </div>
             <div class="option-card" data-type="type" data-value="Cutter with Inner Cutout" onclick="selectCutterStyle(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Inner Cutout">
+                <img src="https://cdn.store-assets.com/s/520532/i/36064540.png" alt="Inner Cutout">
                 <div class="label">Cutter with Inner Cutout</div>
             </div>
             <div class="option-card" data-type="type" data-value="Cutter with Imprint Embosser" onclick="selectCutterStyle(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Imprint">
+                <img src="https://cdn.store-assets.com/s/520532/i/95087537.jpeg" alt="Imprint">
                 <div class="label">Cutter with Imprint Embosser</div>
             </div>
             <div class="option-card" data-type="type" data-value="Cutter with 3D Pop Embosser" onclick="selectCutterStyle(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="3D Pop">
+                <img src="https://cdn.store-assets.com/s/520532/f/12836295.png" alt="3D Pop">
                 <div class="label">Cutter with 3D Pop Embosser</div>
             </div>
             <div class="option-card" data-type="type" data-value="Imprint Embosser Only" onclick="selectCutterStyle(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Imprint Only">
+                <img src="https://cdn.store-assets.com/s/520532/i/41306491.png" alt="Imprint Only">
                 <div class="label">Imprint Embosser Only</div>
             </div>
             <div class="option-card" data-type="type" data-value="3D Pop Embosser Only" onclick="selectCutterStyle(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="3D Pop Only">
+                <img src="https://cdn.store-assets.com/s/520532/i/41306631.png" alt="3D Pop Only">
                 <div class="label">3D Pop Embosser Only</div>
             </div>
         </div>
 
         <h2>Part 3: Material Option</h2>
-        <div class="info-box horizontal">
-            <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Metal">
-            <p><strong>Metal Option:</strong> Durable stainless steel. <em>Only available for <strong>Outline Cutter</strong> and <strong>Inner Cutout</strong>.</em></p>
+        <div class="info-box vertical">
+            <img src="https://cdn.store-assets.com/s/520532/f/15421865.jpg" alt="Metal">
+            <p><strong>Metal Option:</strong> Durable stainless steel. <em>Only available for <strong>Outline Cutter</strong> and <strong>cutter with Inner Cutout</strong>.</em></p>
         </div>
         <div class="input-group">
             <div id="metalCheckboxWrap">
@@ -288,8 +297,9 @@
             </label>
             
             <div id="multiDetails" class="hidden" style="margin-top:15px;">
-                <div class="info-box horizontal">
-                    <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Multi Example">
+                <div class="info-box vertical">
+                    <img src="https://cdn.store-assets.com/s/520532/f/12964655.png" alt="Multi Example">
+                    <img src="https://cdn.store-assets.com/s/520532/f/13722379.jpg" alt="Multi imprint">
                     <p>Combine multiple shapes into one frame for faster cutting.</p>
                 </div>
                 <div class="multi-inputs">
@@ -310,10 +320,13 @@
     <div class="step" id="step2">
         <h2>Section 2: Sizing</h2>
         <div class="info-box vertical">
-            <img src="https://cdn.store-assets.com/s/520532/f/14828158.png" alt="Sizing Guide">
+            <img src="https://cdn.store-assets.com/s/520532/f/14828187.png" alt="shape Guide">
+             <img src="https://cdn.store-assets.com/s/520532/f/14828158.png" alt="Sizing Guide">
             <div style="text-align: left; width: 100%;">
                 <p>We follow the <strong>longest side</strong>. Ratio is preserved.</p>
-                <p>• Mini: 5cm | • Standard: 7.5cm | • Large: 10cm</p>
+                <p>Any size you want</p>
+                 <p>Usually for cookie: Mini: 5cm | Standard: 7.5cm | Large: 10cm</p>
+                 <p>Usually for clay: Micro: 1cm | Standard: 2cm | Large: 3cm</p>
             </div>
         </div>
         <div class="input-group">
@@ -329,9 +342,13 @@
     <!-- SECTION 3: DESIGN -->
     <div class="step" id="step3">
         <h2>Section 3: Design</h2>
-        <div class="info-box horizontal">
-            <img src="https://cdn.store-assets.com/s/520532/f/14828187.png" alt="Design Rules">
-            <p><strong>Tip:</strong> High contrast B&W preferred. Line thickness min <strong>1mm</strong>.</p>
+        <div class="info-box vertical">
+            <img src="https://cdn.store-assets.com/s/520532/f/13064808.png" alt="Blackwhite">
+            <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred.</p>
+            <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
+            <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
+            <img src="https://cdn.store-assets.com/s/520532/f/14159576.png" alt="1mm">
+            <p>Make sure the design line thickness is not too fine and thin ( <strong>minimum 1mm for imprint embosser, 0.5mm for 3d pop embosser</strong>), this is to ensure design will hold its shape during baking.</p>
         </div>
         <div class="dropdown-container">
             <div class="dropdown-header" onclick="toggleDropdown('canvaDropdown')">
@@ -346,20 +363,20 @@
         <label><strong>Design Availability:</strong></label>
         <div class="options-grid">
             <div class="option-card" data-type="design" data-value="I have B&W image" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="B&W Image">
-                <div class="label">B&W Image Ready</div>
+                <img src="https://cdn.store-assets.com/s/520532/f/16878073.png" alt="B&W Image">
+                <div class="label">Mono/ B&W Digital Image (Best)</div>
             </div>
             <div class="option-card" data-type="design" data-value="Hand drawn sketch" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Sketch">
+                <img src="https://cdn.store-assets.com/s/520532/f/16877968.png" alt="Sketch">
                 <div class="label">Hand Drawn Sketch</div>
             </div>
             <div class="option-card" data-type="design" data-value="I have a Photo" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Photo">
-                <div class="label">Photo (Needs conversion)</div>
+                <img src="https://cdn.store-assets.com/s/520532/f/12744351.jpg" alt="Photo">
+                <div class="label">Clear straight Photo</div>
             </div>
             <div class="option-card" data-type="design" data-value="Help me design" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12964282.jpg" alt="Help">
-                <div class="label">Help Me Design</div>
+                <img src="https://cdn.store-assets.com/s/520532/f/15214093.png" alt="Help">
+                <div class="label">Logo</div>
             </div>
         </div>
         <div class="btn-row">
@@ -575,7 +592,7 @@
 
     function sendWhatsApp() {
         const text = document.getElementById('summaryText').innerText;
-        const businessPhone = "60123456789"; 
+        const businessPhone = "60166664308"; 
         window.open(`https://wa.me/${businessPhone}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
