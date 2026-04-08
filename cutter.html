@@ -221,7 +221,7 @@
         <p>Customize your baking & crafting tools</p>
     </div>
 
-    <a href="https://cookiesandcharms.com/pages/custom-your-cookie-cutter" target="_blank" class="guide-link-top">📖 Click here for Full Custom Guide & More Info</a>
+    <a href="https://cookiesandcharms.com/pages/custom-your-cookie-cutter" target="_blank" class="guide-link-top">📖 Click here for Full Custom Guide & Info</a>
 
     <div class="progress-container">
         <div class="progress-line"></div>
@@ -276,10 +276,13 @@
             </div>
         </div>
 
-        <h2>Part 3: Material Option</h2>
+        <label><strong>Part 3: Material Option</strong></label>
+		<div class="info-box">
+             <p>💡 Standard Cutter is Made with food contact safe plastic polymer. Dishwasher safe up to 60C.</p>
+        </div>
         <div class="info-box vertical">
             <img src="https://cdn.store-assets.com/s/520532/f/15421865.jpg" alt="Metal">
-            <p><strong>Metal Option:</strong> Durable stainless steel. <em>Only available for <strong>Outline Cutter</strong> and <strong>cutter with Inner Cutout</strong>.</em></p>
+            <p><strong>Metal Option:</strong> Oven safe stainless steel. <em>Only available for <strong>Outline Cutter</strong> and <strong>cutter with Inner Cutout</strong>.</em></p>
         </div>
         <div class="input-group">
             <div id="metalCheckboxWrap">
@@ -290,7 +293,7 @@
             <p id="metalUnavailableMsg" class="hidden disabled-text">Material option unavailable for the selected style.</p>
         </div>
 
-        <h2>Part 4: Arrangement</h2>
+        <label><strong>Part 4: Arrangement</strong></label>
         <div class="input-group">
             <label class="checkbox-group">
                 <input type="checkbox" id="isMulti" onchange="toggleMultiCutter(this.checked)"> This is a Multi-Cutter
@@ -323,7 +326,7 @@
             <img src="https://cdn.store-assets.com/s/520532/f/14828187.png" alt="shape Guide">
              <img src="https://cdn.store-assets.com/s/520532/f/14828158.png" alt="Sizing Guide">
             <div style="text-align: left; width: 100%;">
-                <p>We follow the <strong>longest side</strong>. Ratio is preserved.</p>
+                <p>Our sizing is base on <strong>longest side</strong>. Ratio is preserved according to image given, unless stated.</p>
                 <p>Any size you want</p>
                  <p>Usually for cookie: Mini: 5cm | Standard: 7.5cm | Large: 10cm</p>
                  <p>Usually for clay: Micro: 1cm | Standard: 2cm | Large: 3cm</p>
@@ -348,7 +351,7 @@
             <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
             <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
             <img src="https://cdn.store-assets.com/s/520532/f/14159576.png" alt="1mm">
-            <p>Make sure the design line thickness is not too fine and thin ( <strong>minimum 1mm for imprint embosser, 0.5mm for 3d pop embosser</strong>), this is to ensure design will hold its shape during baking.</p>
+            <p>Make sure the design line thickness is not too fine and thin ( <strong>minimum 1mm for imprint embosser, 0.5mm for 3d pop embosser</strong>), this is to ensure design will hold its shape after baking.</p>
         </div>
         <div class="dropdown-container">
             <div class="dropdown-header" onclick="toggleDropdown('canvaDropdown')">
@@ -372,9 +375,9 @@
             </div>
             <div class="option-card" data-type="design" data-value="I have a Photo" onclick="selectOption(this)">
                 <img src="https://cdn.store-assets.com/s/520532/f/12744351.jpg" alt="Photo">
-                <div class="label">Clear straight Photo</div>
+                <div class="label">Clear straight Top Down Photo</div>
             </div>
-            <div class="option-card" data-type="design" data-value="Help me design" onclick="selectOption(this)">
+            <div class="option-card" data-type="design" data-value="I have a Logo" onclick="selectOption(this)">
                 <img src="https://cdn.store-assets.com/s/520532/f/15214093.png" alt="Help">
                 <div class="label">Logo</div>
             </div>
@@ -428,10 +431,17 @@
             <label>Location:</label>
             <input type="text" id="location" placeholder="e.g. KL, Malaysia">
         </div>
+        <div class="info-box">
+             <p>💡 Pick Up is available upon request at PJ and KL Malaysia.</p>
+        </div>		
         <div class="input-group">
             <label>Deadline:</label>
             <input type="text" id="deadline" placeholder="e.g. 20th Oct">
         </div>
+        <div class="info-box">
+             <p>💡 Standard Lead time is 2-4 working days, Rush order subject to availability</p>
+			 <p>Large volume and metal cutter have longer lead time.</p>
+        </div>	
         <div class="btn-row">
             <button class="btn btn-back" onclick="changeStep(4)">Back</button>
             <button class="btn btn-next" onclick="generateSummary()">Review →</button>
@@ -441,7 +451,7 @@
     <!-- SECTION 6: SUMMARY -->
     <div class="step" id="step6">
         <h2>Final Summary</h2>
-        <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Copy this summary and send it to us via WhatsApp or Email to get your quote.</p>
+        <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Copy this summary and send it to us via WhatsApp or Email with your design to get your quote.</p>
         <div class="summary-area" id="summaryText"></div>
         <div class="btn-row">
             <button class="btn btn-copy" onclick="copyToClipboard()">Copy Summary</button>
