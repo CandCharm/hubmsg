@@ -184,6 +184,7 @@
         }
         #cc-builder-app .btn-next { background: var(--cc-primary); color: white; }
         #cc-builder-app .btn-back { background: #eee; color: #666; }
+        #cc-builder-app .btn-add { background: #f0f9ff; color: var(--cc-primary); border: 2px dashed var(--cc-primary); }
         #cc-builder-app .btn-whatsapp { background: #25D366; color: white; }
         #cc-builder-app .btn-email { background: #EA4335; color: white; }
         #cc-builder-app .btn-copy  { background: var(--cc-primary); color: white; }
@@ -243,7 +244,7 @@
             <img src="https://cdn.store-assets.com/s/520532/f/5498264.png" alt="Cookies & Charms Logo" class="logo-img">
         </a>
         <h1>Custom Your Mooncake Mold</h1>
-        <p>Let us know what you want make</p>
+        <p>Let us know what you want to make</p>
     </div>
 
     <a href="https://cookiesandcharms.com/pages/custom-your-very-own-mooncake-mold" target="_blank" class="guide-link-top">📖 Click here for Full Custom Guide & Info</a>
@@ -256,16 +257,18 @@
         <div class="progress-step" id="p4">4</div>
         <div class="progress-step" id="p5">5</div>
         <div class="progress-step" id="p6">6</div>
+        <div class="progress-step" id="p7">7</div>
     </div>
 
+    <!-- SECTION 1: MOLD TYPE -->
     <div class="step active" id="step1">
         <h2>Section 1: Mold Type</h2>
         <div class="input-group">
             <label>Part 1: Planning to make...</label>
             <select id="usageType" onchange="checkOtherUsage(this.value)">
-                <option value="Baked mooncake">Baked cake</option>
-                <option value="Snowskin mooncake">Snowskin cake</option>
-                <option value="Icecream mooncake">Icecream cake</option>
+                <option value="Baked mooncake">Baked mooncake</option>
+                <option value="Snowskin mooncake">Snowskin mooncake</option>
+                <option value="Icecream mooncake">Icecream mooncake</option>
                 <option value="Other">Others (Please specify)</option>
             </select>
             <input type="text" id="usageOther" placeholder="Please specify..." class="hidden" style="margin-top:10px;">
@@ -287,6 +290,7 @@
             </div>
         </div>
         <div class="btn-row">
+            <button class="btn btn-back hidden" id="backToListBtn" onclick="changeStep(4)">← Back to List</button>
             <button class="btn btn-next" onclick="validateStep1()">Next: Sizing →</button>
         </div>
     </div>
@@ -324,7 +328,7 @@
                 <option value="75g mold (Mooncake length ~50mm). Design within 40mm.">75g mold (Mooncake length ~50mm). Design within 40mm.</option>
                 <option value="100g mold (Mooncake length ~58mm). Design within 48mm.">100g mold (Mooncake length ~58mm). Design within 48mm.</option>
                 <option value="125g mold (Mooncake length ~62mm). Design within 52mm.">125g mold (Mooncake length ~62mm). Design within 52mm.</option>
-                <option value="150g mold (Mooncake elngth ~70mm). Design within 60mm.">150g mold (Mooncake length ~70mm). Design within 60mm.</option>
+                <option value="150g mold (Mooncake length ~70mm). Design within 60mm.">150g mold (Mooncake length ~70mm). Design within 60mm.</option>
             </select>
         </div>
 
@@ -390,16 +394,63 @@
 
         <div class="btn-row">
             <button class="btn btn-back" onclick="changeStep(1)">Back</button>
-            <button class="btn btn-next" onclick="validateStep2()">Next: Design →</button>
+            <button class="btn btn-next" onclick="validateStep2()">Next: Quantity →</button>
         </div>
     </div>
 
-    <!-- SECTION 3: DESIGN -->
+    <!-- SECTION 3: QUANTITY (Per-Mold) -->
     <div class="step" id="step3">
-        <h2>Section 3: Design</h2>
+        <h2>Section 3: Quantity</h2>
+        <div class="input-group">
+            <label>Sets/Pieces needed:</label>
+            <input type="number" id="quantity" value="1" min="1">
+        </div>
+        <div class="input-group">
+            <label class="checkbox-group">
+                <input type="checkbox" id="isBulk" onchange="toggleBulkOptions(this.checked)"> I am looking for Wholesale / Workshop / Corporate Gift
+            </label>
+        </div>
+        <div id="bulkOptionsWrap" class="hidden">
+            <div class="input-group">
+                <label>Please specify the usage for bulk purchase:</label>
+                <select id="bulkType">
+                    <option value="Wholesale">Wholesale (For Resale)</option>
+                    <option value="Workshop">Workshop Use</option>
+                    <option value="Corporate Gift">Corporate Gift</option>
+                    <option value="Event Giveaway">Event Giveaway</option>
+                </select>
+            <div class="info-box" style="margin-top: 15px;">
+                <p>💡 Bulk pricing applies for orders of 10+ identical pieces or for recurring workshop partnerships.</p>
+            </div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-back" onclick="changeStep(2)">Back</button>
+            <button class="btn btn-next" onclick="validateStep3()">Add to List →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 4: INQUIRY LIST -->
+    <div class="step" id="step4">
+        <h2>Section 4: Your Inquiry List</h2>
+        <div class="info-box">
+             <p>💡 Here are the molds details you've added. You can add more to request quotes </p>
+        </div>
+        
+        <div id="inquiryListContainer" style="margin-bottom: 20px;"></div>
+        
+        <div class="btn-row">
+            <button class="btn btn-add" onclick="changeStep(1)">+ Add Another Mold</button>
+            <button class="btn btn-next" onclick="validateStep4()">Next: Design →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 5: DESIGN (Global) -->
+    <div class="step" id="step5">
+        <h2>Section 5: Design</h2>
         <div class="info-box vertical">
             <img src="https://cdn.store-assets.com/s/520532/f/13169389.png" alt="Blackwhite">
-            <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred.</p>
+            <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred. (This design selection will apply to your entire inquiry list).</p>
             <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
             <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
             <p>TIP: Thicker Design (>1mm) is easier to press and use. Especially if you are making traditional baked mooncake.</p>
@@ -438,46 +489,18 @@
             
         </div>
         <div class="btn-row">
-            <button class="btn btn-back" onclick="changeStep(2)">Back</button>
-            <button class="btn btn-next" onclick="validateStep3()">Next: Quantity →</button>
+            <button class="btn btn-back" onclick="changeStep(4)">Back to List</button>
+            <button class="btn btn-next" onclick="validateStep5()">Next: Shipping →</button>
         </div>
     </div>
 
-    <!-- SECTION 4: QUANTITY -->
-    <div class="step" id="step4">
-        <h2>Section 4: Quantity</h2>
+    <!-- SECTION 6: SHIPPING (Global) -->
+    <div class="step" id="step6">
+        <h2>Section 6: Shipping & Details</h2>
         <div class="input-group">
-            <label>Sets/Pieces needed:</label>
-            <input type="number" id="quantity" value="1" min="1">
+            <label>Name & Company:</label>
+            <input type="text" id="Name" placeholder="e.g. Anna, Anna Bakery">
         </div>
-        <div class="input-group">
-            <label class="checkbox-group">
-                <input type="checkbox" id="isBulk" onchange="toggleBulkOptions(this.checked)"> I am looking for Wholesale / Workshop / Corporate Gift
-            </label>
-        </div>
-        <div id="bulkOptionsWrap" class="hidden">
-            <div class="input-group">
-                <label>Please specify the usage for bulk purchase:</label>
-                <select id="bulkType">
-                    <option value="Wholesale">Wholesale (For Resale)</option>
-                    <option value="Workshop">Workshop Use</option>
-                    <option value="Corporate Gift">Corporate Gift</option>
-                    <option value="Event Giveaway">Event Giveaway</option>
-                </select>
-            <div class="info-box">
-                <p>💡 Bulk pricing applies for orders of 10+ identical pieces or for recurring workshop partnerships.</p>
-            </div>
-            </div>
-        </div>
-        <div class="btn-row">
-            <button class="btn btn-back" onclick="changeStep(3)">Back</button>
-            <button class="btn btn-next" onclick="changeStep(5)">Next: Shipping →</button>
-        </div>
-    </div>
-
-    <!-- SECTION 5: SHIPPING -->
-    <div class="step" id="step5">
-        <h2>Section 5: Shipping</h2>
         <div class="input-group">
             <label>Location:</label>
             <input type="text" id="location" placeholder="e.g. KL, Malaysia">
@@ -494,13 +517,13 @@
 			 <p>Large volume may have longer lead time.</p>
         </div>
         <div class="btn-row">
-            <button class="btn btn-back" onclick="changeStep(4)">Back</button>
+            <button class="btn btn-back" onclick="changeStep(5)">Back</button>
             <button class="btn btn-next" onclick="generateSummary()">Review →</button>
         </div>
     </div>
 
     <!-- FINAL SUMMARY -->
-    <div class="step" id="step6">
+    <div class="step" id="step7">
         <h2>Final Summary</h2>
         <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Copy this summary and send it to us via WhatsApp or Email with your design to get your quote.</p>
         <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Price and Lead time depends on details given.</p>
@@ -510,16 +533,19 @@
             <button class="btn btn-whatsapp" onclick="sendWhatsApp()">WhatsApp</button>
             <button class="btn btn-email" onclick="sendEmail()">Email Inquiry</button>
         </div>
-        <button class="btn btn-back" style="width:100%; margin-top:10px;" onclick="changeStep(5)">Back to Edit</button>
+        <button class="btn btn-back" style="width:100%; margin-top:10px;" onclick="changeStep(6)">Back to Edit</button>
     </div>
 </div>
 
 <script>
-    let selections = { usage: '', type: '', design: '', size: '', quantity: 1, isBulk: false, bulkType: '', deadline: '', location: '' };
+    let inquiryList = [];
+    let selections = { usage: '', type: '', size: '', quantity: 1, isBulk: false, bulkType: '' };
+    let globalSelections = { design: '', location: '', deadline: '' };
+    
     let activeCalcTab = 'rect';
     let inputHistory = [];
 
-    // Helper functions
+    // --- CALCULATOR HELPER FUNCTIONS ---
     function unitToCm(val, unit) {
         if (!val || isNaN(val)) return 0;
         if (unit === 'mm') return val / 10;
@@ -705,7 +731,8 @@
         selections.size = text;
     }
 
-    // Step UI Logic
+    // --- STEP & UI LOGIC ---
+
     function toggleDropdown(id) {
         const content = document.getElementById(id);
         const arrow = document.getElementById('canvaArrow');
@@ -715,7 +742,7 @@
 
     function checkOtherUsage(val) { document.getElementById('usageOther').classList.toggle('hidden', val !== 'Other'); }
 
-    function toggleBulkOptions(checked) { document.getElementById('bulkOptionsWrap').classList.toggle('hidden', !checked); selections.isBulk = checked; }
+    function toggleBulkOptions(checked) { document.getElementById('bulkOptionsWrap').classList.toggle('hidden', !checked); }
 
     function selectMoldShape(el) {
         selectOption(el);
@@ -732,10 +759,37 @@
         const type = el.dataset.type;
         document.querySelectorAll(`#cc-builder-app .option-card[data-type="${type}"]`).forEach(card => card.classList.remove('selected'));
         el.classList.add('selected');
-        selections[type] = el.dataset.value;
+        
+        if (type === 'design') {
+            globalSelections.design = el.dataset.value;
+        } else {
+            selections[type] = el.dataset.value;
+        }
     }
 
-    function validateStep1() { if (!selections.type) { alert("Please select a Mold Shape."); return; } changeStep(2); }
+    // --- VALIDATION AND ROUTING ---
+
+    function changeStep(n) {
+        document.querySelectorAll('#cc-builder-app .step').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('#cc-builder-app .progress-step').forEach((p, idx) => {
+            idx + 1 <= n ? p.classList.add('active') : p.classList.remove('active');
+        });
+        document.getElementById('step' + n).classList.add('active');
+        
+        // Show/hide 'Back to List' button in Step 1 if items exist
+        if (n === 1) {
+            const backBtn = document.getElementById('backToListBtn');
+            if (inquiryList.length > 0) backBtn.classList.remove('hidden');
+            else backBtn.classList.add('hidden');
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep1() { 
+        if (!selections.type) { alert("Please select a Mold Shape."); return; } 
+        changeStep(2); 
+    }
 
     function validateStep2() {
         if (selections.type === 'Scallop Round') {
@@ -749,32 +803,133 @@
         } else if (selections.type === 'Custom Shape') {
             if (!selections.size || selections.size.includes("Summary will appear")) { alert("Please complete the dimensions in the calculator."); return; }
         }
-        changeStep(3);
+        changeStep(3); // Go to Quantity (was Design)
     }
 
-    function validateStep3() { if (!selections.design) { alert("Please select your Design Status."); return; } changeStep(4); }
-
-    function changeStep(n) {
-        document.querySelectorAll('#cc-builder-app .step').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('#cc-builder-app .progress-step').forEach((p, idx) => {
-            idx + 1 <= n ? p.classList.add('active') : p.classList.remove('active');
-        });
-        document.getElementById('step' + n).classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function generateSummary() {
+    function validateStep3() {
+        // Collect Step 1 (Usage) and Step 3 (Quantity) data right before saving
         const u = document.getElementById('usageType').value;
         selections.usage = (u === 'Other') ? document.getElementById('usageOther').value : u;
-        selections.quantity = document.getElementById('quantity').value;
-        selections.deadline = document.getElementById('deadline').value;
-        selections.location = document.getElementById('location').value;
-        const bulkStr = selections.isBulk ? ` - [${document.getElementById('bulkType').value} Bulk]` : "";
         
-        const summaryText = `*Custom Mold Inquiry*${bulkStr}%0A- Style: ${selections.type}%0A- Usage: ${selections.usage}%0A- Size: ${selections.size}%0A- Design: ${selections.design}%0A- Qty: ${selections.quantity}%0A- Location: ${selections.location}%0A- Deadline: ${selections.deadline || 'Flexible'}`;
+        selections.quantity = document.getElementById('quantity').value;
+        selections.isBulk = document.getElementById('isBulk').checked;
+        selections.bulkType = selections.isBulk ? document.getElementById('bulkType').value : '';
+
+        // Add deep copy to inquiry list
+        inquiryList.push(JSON.parse(JSON.stringify(selections)));
+        
+        // Reset mold-specific selections to allow adding another item
+        resetCurrentForm();
+        
+        renderInquiryList();
+        changeStep(4); // Go to Inquiry List
+    }
+
+    function validateStep4() {
+        if (inquiryList.length === 0) {
+            alert("Please add at least one mold to your list.");
+            changeStep(1);
+            return;
+        }
+        changeStep(5); // Go to Global Design
+    }
+
+    function validateStep5() {
+        if (!globalSelections.design) { 
+            alert("Please select your Design Availability."); 
+            return; 
+        }
+        changeStep(6); // Go to Shipping
+    }
+
+    // --- LIST MANAGEMENT ---
+
+    function resetCurrentForm() {
+        // Keep the usage type around since customers likely make the same type of cake for multiple molds
+        const savedUsage = selections.usage; 
+        selections = { usage: savedUsage, type: '', size: '', quantity: 1, isBulk: false, bulkType: '' };
+        
+        // Reset Visuals (only for mold specific cards in step 1, leave global design cards alone)
+        document.querySelectorAll('#step1 .option-card').forEach(c => c.classList.remove('selected'));
+        
+        document.getElementById('scallopRoundUI').classList.add('hidden');
+        document.getElementById('scallopSquareUI').classList.add('hidden');
+        document.getElementById('customShapeUI').classList.add('hidden');
+        
+        document.getElementById('scallopRoundSize').selectedIndex = 0;
+        document.getElementById('scallopSquareSize').selectedIndex = 0;
+        
+        document.getElementById('quantity').value = 1;
+        document.getElementById('isBulk').checked = false;
+        toggleBulkOptions(false);
+        
+        ['rect-w','rect-l','rect-h','rect-wt','round-d','round-h','round-wt'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('calc-summary-preview').innerText = 'Summary will appear here...';
+        inputHistory = [];
+    }
+
+    function renderInquiryList() {
+        const container = document.getElementById('inquiryListContainer');
+        if (inquiryList.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666; font-style:italic;">Your list is empty.</p>';
+            return;
+        }
+        
+        let html = '';
+        inquiryList.forEach((item, index) => {
+            let bulkStr = item.isBulk ? `<span style="color:var(--cc-accent); font-size:0.8rem; font-weight:bold; margin-left:8px;">[${item.bulkType} Bulk]</span>` : '';
+            html += `
+            <div style="background: white; border: 1px solid #ddd; border-radius: 12px; padding: 15px; margin-bottom: 12px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                <h4 style="margin: 0 0 8px 0; color: var(--cc-primary);">${item.type} <span style="font-size:0.8rem; color:#888; font-weight:normal;">(Item ${index + 1})</span></h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #555;"><strong>Usage:</strong> ${item.usage}</p>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #555;"><strong>Size:</strong> ${item.size}</p>
+                <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #555;"><strong>Qty:</strong> ${item.quantity} ${bulkStr}</p>
+                <button onclick="removeItem(${index})" style="position: absolute; top: 15px; right: 15px; background: #ffebee; color: #c62828; border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition:0.2s;">Remove</button>
+            </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function removeItem(index) {
+        inquiryList.splice(index, 1);
+        if (inquiryList.length === 0) {
+            changeStep(1); // Force back to start if they delete everything
+        } else {
+            renderInquiryList();
+        }
+    }
+
+    // --- FINAL SUMMARY GENERATION ---
+
+    function generateSummary() {
+         globalSelections.Name = document.getElementById('Name').value;
+        globalSelections.location = document.getElementById('location').value;
+        globalSelections.deadline = document.getElementById('deadline').value;
+        
+        let summaryText = `I am Looking for Custom Mooncake Mold%0A%0A`;
+        
+        summaryText += `--Order Details --%0A`;
+        summaryText += `- Name: ${globalSelections.Name || 'Not provided'}%0A`;
+        summaryText += `- Design: ${globalSelections.design}%0A`;
+        summaryText += `- Location: ${globalSelections.location || 'Not provided'}%0A`;
+        summaryText += `- Deadline: ${globalSelections.deadline || 'Flexible'}%0A%0A`;
+        
+        inquiryList.forEach((item, index) => {
+            const bulkStr = item.isBulk ? ` - [${item.bulkType} Bulk]` : "";
+            summaryText += `-- Mold ${index + 1} --%0A`;
+            summaryText += `- Style: ${item.type}%0A`;
+            summaryText += `- Usage: ${item.usage}%0A`;
+            summaryText += `- Size: ${item.size}%0A`;
+            summaryText += `- Qty: ${item.quantity}${bulkStr}%0A%0A`;
+        });
+
+       
         
         document.getElementById('summaryText').innerText = summaryText.replace(/%0A/g, '\n');
-        changeStep(6);
+        changeStep(7);
     }
 
     function copyToClipboard() {
