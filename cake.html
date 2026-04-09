@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Mooncake Mold Configurator | Cookies & Charms</title>
+    
+    <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e),n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '347826');
+    </script>
+    <style>
+        /* CSS variables scoped to the app container */
+        #cc-builder-app {
+            --cc-primary: #174D71;
+            --cc-primary-light: #d8eeff;
+            --cc-primary-dark: #0d324d;
+            --cc-bg: #f4f9ff;
+            --cc-card-bg: #ffffff;
+            --cc-text: #333;
+            --cc-accent: #2196F3;
+            
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--cc-text);
+            max-width: 600px;
+            margin: 40px auto; 
+            background: var(--cc-card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(23, 77, 113, 0.1);
+            line-height: 1.5;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+         #cc-builder-app * {
+            box-sizing: border-box;
+        }
+
+        #cc-builder-app .header { text-align: center; margin-bottom: 20px; }
+        #cc-builder-app .header .logo-link { display: inline-block; margin-bottom: 15px; }
+        #cc-builder-app .header .logo-img { max-width: 180px; height: auto; display: block; margin: 0 auto; }
+        #cc-builder-app .header h1 { color: var(--cc-primary); font-size: 1.8rem; margin: 0; }
+        #cc-builder-app .header p { font-size: 0.95rem; color: #666; margin-top: 5px; }
+
+        #cc-builder-app .guide-link-top {
+            display: block;
+            text-align: center;
+            background: var(--cc-primary-light);
+            padding: 10px;
+            border-radius: 10px;
+            color: var(--cc-primary);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            border: 1px solid rgba(23, 77, 113, 0.2);
+        }
+
+        /* Progress Bar */
+        #cc-builder-app .progress-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        #cc-builder-app .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+            transition: 0.3s;
+        }
+        #cc-builder-app .progress-step.active { background: var(--cc-primary); color: white; }
+        #cc-builder-app .progress-line {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #eee;
+            z-index: 1;
+        }
+
+        #cc-builder-app .step { display: none; }
+        #cc-builder-app .step.active { display: block; animation: ccFadeIn 0.4s ease; }
+        @keyframes ccFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        #cc-builder-app h2 { font-size: 1.1rem; color: var(--cc-primary); border-left: 4px solid var(--cc-primary); padding-left: 10px; margin: 25px 0 15px; }
+
+        /* Grid Selection */
+        #cc-builder-app .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
+         #cc-builder-app .option-card {
+            border: 2px solid #eee;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #cc-builder-app .option-card img { width: 100%; height: 200px; object-fit: contain; background: #f0f0f0; display: block; pointer-events: none; }
+        #cc-builder-app .option-card .label { padding: 10px; font-size: 0.85rem; font-weight: 600; color: #555; line-height: 1.2; pointer-events: none; }
+        #cc-builder-app .option-card:hover { border-color: var(--cc-accent); }
+        #cc-builder-app .option-card.selected { border-color: var(--cc-primary); background: var(--cc-primary-light); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        #cc-builder-app .option-card.selected .label { color: var(--cc-primary); }
+
+        /* Inputs */
+        #cc-builder-app .input-group { margin-bottom: 20px; }
+        #cc-builder-app .input-group label { display: block; font-size: 0.9rem; font-weight: bold; margin-bottom: 8px; color: var(--cc-primary); }
+        #cc-builder-app input[type="text"], 
+        #cc-builder-app input[type="number"], 
+        #cc-builder-app select, 
+        #cc-builder-app textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #cc-builder-app .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #cc-builder-app .info-box {
+            background: var(--cc-primary-light);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border: 1px solid rgba(23, 77, 113, 0.1);
+        }
+        #cc-builder-app .info-box.vertical { flex-direction: column; align-items: center; text-align: center; }
+        #cc-builder-app .info-box.vertical img { width: auto; max-width: 70%; max-height: 200px; height: auto; }
+        #cc-builder-app .info-box p { margin: 0; font-size: 0.85rem; line-height: 1.4; color: var(--cc-primary-dark); }
+
+        /* Accordion Style */
+        #cc-builder-app .dropdown-container { margin: 20px 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; }
+        #cc-builder-app .dropdown-header { background: #f8f9fa; padding: 12px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 0.9rem; color: var(--cc-primary); }
+        #cc-builder-app .dropdown-content { padding: 15px; display: none; background: white; border-top: 1px solid #eee; }
+        #cc-builder-app .dropdown-content.show { display: block; }
+
+        #cc-builder-app .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+        #cc-builder-app .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        #cc-builder-app .btn-next { background: var(--cc-primary); color: white; }
+        #cc-builder-app .btn-back { background: #eee; color: #666; }
+        #cc-builder-app .btn-whatsapp { background: #25D366; color: white; }
+        #cc-builder-app .btn-email { background: #EA4335; color: white; }
+        #cc-builder-app .btn-copy  { background: var(--cc-primary); color: white; }
+        #cc-builder-app .btn:hover { filter: brightness(90%); }
+
+        #cc-builder-app .summary-area {
+            background: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            border-radius: 15px;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        #cc-builder-app .hidden { display: none !important; }
+
+        /* Calculator Styles */
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .tab-btn:first-child { border-radius: 12px 0 0 12px; }
+        .tab-btn:last-child { border-radius: 0 12px 12px 0; }
+        .tab-btn.active { background: var(--cc-primary); color: white; border-color: var(--cc-primary); }
+
+        .calc-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .calc-input-row label { flex: 0 0 100px; font-size: 0.85rem; color: #555; }
+        .calc-input-row input { flex: 1; }
+        .calc-unit-select { flex: 0 0 60px; font-size: 0.8rem !important; padding: 12px 5px !important; }
+        
+        #calc-summary-preview {
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #174D71;
+            font-style: italic;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="cc-builder-app">
+    <div class="header">
+        <a href="https://cookiesandcharms.com/" target="_blank" class="logo-link">
+            <img src="https://cdn.store-assets.com/s/520532/f/5498264.png" alt="Cookies & Charms Logo" class="logo-img">
+        </a>
+        <h1>Custom Your Mooncake Mold</h1>
+        <p>Customize your baking & crafting tools</p>
+    </div>
+
+    <a href="https://cookiesandcharms.com/pages/custom-your-very-own-mooncake-mold" target="_blank" class="guide-link-top">📖 Click here for Full Custom Guide & Info</a>
+
+    <div class="progress-container">
+        <div class="progress-line"></div>
+        <div class="progress-step active" id="p1">1</div>
+        <div class="progress-step" id="p2">2</div>
+        <div class="progress-step" id="p3">3</div>
+        <div class="progress-step" id="p4">4</div>
+        <div class="progress-step" id="p5">5</div>
+        <div class="progress-step" id="p6">6</div>
+    </div>
+
+    <div class="step active" id="step1">
+        <h2>Section 1: Mold Type</h2>
+        <div class="input-group">
+            <label>Part 1: Planning to make...</label>
+            <select id="usageType" onchange="checkOtherUsage(this.value)">
+                <option value="Baked mooncake">Baked cake</option>
+                <option value="Snowskin mooncake">Snowskin cake</option>
+                <option value="Icecream mooncake">Icecream cake</option>
+                <option value="Other">Others (Please specify)</option>
+            </select>
+            <input type="text" id="usageOther" placeholder="Please specify..." class="hidden" style="margin-top:10px;">
+        </div>
+
+        <label><strong>Part 2: Select Mold Shape</strong></label>
+        <div class="options-grid">
+            <div class="option-card" data-type="type" data-value="Scallop Round" onclick="selectMoldShape(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/13330494.jpg" alt="Scallop Round">
+                <div class="label">Scallop Round</div>
+            </div>
+            <div class="option-card" data-type="type" data-value="Scallop Square" onclick="selectMoldShape(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/13330497.jpg" alt="Scallop Square">
+                <div class="label">Scallop Square</div>
+            </div>
+            <div class="option-card" data-type="type" data-value="Custom Shape" onclick="selectMoldShape(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/13330509.jpg" alt="Custom Shape">
+                <div class="label">Custom Shape</div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-next" onclick="validateStep1()">Next: Sizing →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 2: SIZING -->
+    <div class="step" id="step2">
+        <h2>Section 2: Sizing</h2>
+        
+        <div id="scallopRoundUI" class="hidden">
+            <label>Select Scallop Round Size:</label>
+            <select id="scallopRoundSize" class="input-group">
+                <option value="" disabled selected>Choose an option...</option>
+                <option value="50g mold (Mooncake diameter ~45mm). Design within 35mm.">50g mold (Mooncake diameter ~45mm). Design within 35mm.</option>
+                <option value="63g mold (Mooncake diameter ~51mm). Design within 41mm.">63g mold (Mooncake diameter ~51mm). Design within 41mm.</option>
+                <option value="75g mold (Mooncake diameter ~58mm). Design within 48mm.">75g mold (Mooncake diameter ~58mm). Design within 48mm.</option>
+                <option value="100g mold (Mooncake diameter ~65mm). Design within 55mm.">100g mold (Mooncake diameter ~65mm). Design within 55mm.</option>
+                <option value="125g mold (Mooncake diameter ~70mm). Design within 60mm.">125g mold (Mooncake diameter ~70mm). Design within 60mm.</option>
+                <option value="150g mold (Mooncake diameter ~76mm). Design within 65mm.">150g mold (Mooncake diameter ~76mm). Design within 65mm.</option>
+            </select>
+        </div>
+
+        <div id="scallopSquareUI" class="hidden">
+            <label>Select Scallop Square Size:</label>
+            <select id="scallopSquareSize" class="input-group">
+                <option value="" disabled selected>Choose an option...</option>
+                <option value="50g mold (Mooncake length ~40mm). Design within 30mm.">50g mold (Mooncake length ~40mm). Design within 30mm.</option>
+                <option value="75g mold (Mooncake length ~50mm). Design within 40mm.">75g mold (Mooncake length ~50mm). Design within 40mm.</option>
+                <option value="100g mold (Mooncake length ~58mm). Design within 48mm.">100g mold (Mooncake length ~58mm). Design within 48mm.</option>
+                <option value="125g mold (Mooncake length ~62mm). Design within 52mm.">125g mold (Mooncake length ~62mm). Design within 52mm.</option>
+                <option value="150g mold (Mooncake elngth ~70mm). Design within 60mm.">150g mold (Mooncake length ~70mm). Design within 60mm.</option>
+            </select>
+        </div>
+
+        <div id="customShapeUI" class="hidden">
+            <div class="info-box">
+                <p>💡 <strong>Size Calculator:</strong> Approximate size vs weight calculator for your custom shape mooncake.</p>
+            </div>
+            
+            <div class="tabs-container" style="display: flex; margin-bottom: 20px;">
+                <button class="tab-btn active" id="tab-btn-rect" onclick="switchCalcTab('rect')">Rectangular</button>
+                <button class="tab-btn" id="tab-btn-round" onclick="switchCalcTab('round')">Round</button>
+            </div>
+
+            <!-- RECTANGLE CALC -->
+            <div id="calc-rect-area">
+                <div class="calc-input-row">
+                    <label>Width</label>
+                    <input type="number" id="rect-w" oninput="handleInput('rect', 'w')" step="any">
+                    <select id="rect-w-unit" class="calc-unit-select" onchange="calculateRect()"><option>cm</option><option>mm</option><option>in</option></select>
+                </div>
+                <div class="calc-input-row">
+                    <label>Length</label>
+                    <input type="number" id="rect-l" oninput="handleInput('rect', 'l')" step="any">
+                    <select id="rect-l-unit" class="calc-unit-select" onchange="calculateRect()"><option>cm</option><option>mm</option><option>in</option></select>
+                </div>
+                <div class="calc-input-row">
+                    <label>Height</label>
+                    <input type="number" id="rect-h" oninput="handleInput('rect', 'h')" step="any">
+                    <select id="rect-h-unit" class="calc-unit-select" onchange="calculateRect()"><option>cm</option><option>mm</option><option>in</option></select>
+                </div>
+                <div class="calc-input-row">
+                    <label>Weight (g)</label>
+                    <input type="number" id="rect-wt" oninput="handleInput('rect', 'wt')" step="any">
+                    <div style="flex:0 0 60px; text-align:center; font-size:0.8rem;">g</div>
+                </div>
+            </div>
+
+            <!-- ROUND CALC -->
+            <div id="calc-round-area" class="hidden">
+                <div class="calc-input-row">
+                    <label>Diameter</label>
+                    <input type="number" id="round-d" oninput="handleInput('round', 'd')" step="any">
+                    <select id="round-d-unit" class="calc-unit-select" onchange="calculateRound()"><option>cm</option><option>mm</option><option>in</option></select>
+                </div>
+                <div class="calc-input-row">
+                    <label>Height</label>
+                    <input type="number" id="round-h" oninput="handleInput('round', 'h')" step="any">
+                    <select id="round-h-unit" class="calc-unit-select" onchange="calculateRound()"><option>cm</option><option>mm</option><option>in</option></select>
+                </div>
+                <div class="calc-input-row">
+                    <label>Weight (g)</label>
+                    <input type="number" id="round-wt" oninput="handleInput('round', 'wt')" step="any">
+                    <div style="flex:0 0 60px; text-align:center; font-size:0.8rem;">g</div>
+                </div>
+            </div>
+
+            <div id="calc-summary-preview">Summary will appear here...</div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-back" onclick="changeStep(1)">Back</button>
+            <button class="btn btn-next" onclick="validateStep2()">Next: Design →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 3: DESIGN -->
+    <div class="step" id="step3">
+        <h2>Section 3: Design</h2>
+        <div class="info-box vertical">
+            <img src="https://cdn.store-assets.com/s/520532/f/13169389.png" alt="Blackwhite">
+            <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred.</p>
+            <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
+            <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
+            <p>TIP: Thicker Design (>1mm) is easier to press and use. Especially if you are making traditional baked mooncake.</p>
+            <img src="https://cdn.store-assets.com/s/520532/f/14159576.png" alt="1mm">
+            <img src="https://cdn.store-assets.com/s/520532/f/14886017.jpg" alt="words">
+            <p>Make sure the design line thickness is not too fine and thin ( <strong>minimum 1mm for baked mooncake</strong>), this is to ensure design will hold its shape after baking.</p>
+            <img src="https://cdn.store-assets.com/s/520532/f/14690221.jpg" alt="thickness_eg">
+        </div>
+        <div class="dropdown-container">
+            <div class="dropdown-header" onclick="toggleDropdown('canvaDropdown')">
+                <span>🎨 Use Canva Template</span>
+                <span id="canvaArrow">▼</span>
+            </div>
+            <div class="dropdown-content" id="canvaDropdown">
+                <div class="ml-embedded" data-form="A7OrPv"></div>
+            </div>
+        </div>
+        <label><strong>Design Availability:</strong></label>
+        <div class="options-grid">
+            <div class="option-card" data-type="design" data-value="I have a Logo" onclick="selectOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/14713706.png" alt="Help">
+                <div class="label">Canva Template (Best)</div>
+            </div>
+            <div class="option-card" data-type="design" data-value="I have B&W image" onclick="selectOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/16878073.png" alt="B&W Image">
+                <div class="label">Mono/ B&W Digital Image</div>
+            </div>
+            <div class="option-card" data-type="design" data-value="Hand drawn sketch" onclick="selectOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/16877968.png" alt="Sketch">
+                <div class="label">Hand Drawn Sketch</div>
+            </div>
+            <div class="option-card" data-type="design" data-value="I have a Photo" onclick="selectOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/12744351.jpg" alt="Photo">
+                <div class="label">Clear straight Top Down Photo</div>
+            </div>
+            
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-back" onclick="changeStep(2)">Back</button>
+            <button class="btn btn-next" onclick="validateStep3()">Next: Quantity →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 4: QUANTITY -->
+    <div class="step" id="step4">
+        <h2>Section 4: Quantity</h2>
+        <div class="input-group">
+            <label>Sets/Pieces needed:</label>
+            <input type="number" id="quantity" value="1" min="1">
+        </div>
+        <div class="input-group">
+            <label class="checkbox-group">
+                <input type="checkbox" id="isBulk" onchange="toggleBulkOptions(this.checked)"> I am looking for Wholesale / Workshop / Corporate Gift
+            </label>
+        </div>
+        <div id="bulkOptionsWrap" class="hidden">
+            <div class="input-group">
+                <label>Please specify the usage for bulk purchase:</label>
+                <select id="bulkType">
+                    <option value="Wholesale">Wholesale (For Resale)</option>
+                    <option value="Workshop">Workshop Use</option>
+                    <option value="Corporate Gift">Corporate Gift</option>
+                    <option value="Event Giveaway">Event Giveaway</option>
+                </select>
+            <div class="info-box">
+                <p>💡 Bulk pricing applies for orders of 10+ identical pieces or for recurring workshop partnerships.</p>
+            </div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-back" onclick="changeStep(3)">Back</button>
+            <button class="btn btn-next" onclick="changeStep(5)">Next: Shipping →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 5: SHIPPING -->
+    <div class="step" id="step5">
+        <h2>Section 5: Shipping</h2>
+        <div class="input-group">
+            <label>Location:</label>
+            <input type="text" id="location" placeholder="e.g. KL, Malaysia">
+        </div>
+        <div class="info-box">
+             <p>💡 Pick Up is available upon request at PJ and KL Malaysia.</p>
+        </div>
+        <div class="input-group">
+            <label>Deadline:</label>
+            <input type="text" id="deadline" placeholder="e.g. 20th Oct">
+        </div>
+        <div class="info-box">
+             <p>💡 Standard Lead time is 3-5 working days, Rush order subject to availability</p>
+			 <p>Large volume may have longer lead time.</p>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-back" onclick="changeStep(4)">Back</button>
+            <button class="btn btn-next" onclick="generateSummary()">Review →</button>
+        </div>
+    </div>
+
+    <!-- FINAL SUMMARY -->
+    <div class="step" id="step6">
+        <h2>Final Summary</h2>
+        <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Copy this summary and send it to us via WhatsApp or Email with your design to get your quote.</p>
+        <div class="summary-area" id="summaryText"></div>
+        <div class="btn-row">
+            <button class="btn btn-copy" onclick="copyToClipboard()">Copy Summary</button>
+            <button class="btn btn-whatsapp" onclick="sendWhatsApp()">WhatsApp</button>
+            <button class="btn btn-email" onclick="sendEmail()">Email Inquiry</button>
+        </div>
+        <button class="btn btn-back" style="width:100%; margin-top:10px;" onclick="changeStep(5)">Back to Edit</button>
+    </div>
+</div>
+
+<script>
+    let selections = { usage: '', type: '', design: '', size: '', quantity: 1, isBulk: false, bulkType: '', deadline: '', location: '' };
+    let activeCalcTab = 'rect';
+    let inputHistory = [];
+
+    // Helper functions
+    function unitToCm(val, unit) {
+        if (!val || isNaN(val)) return 0;
+        if (unit === 'mm') return val / 10;
+        if (unit === 'in') return val * 2.54;
+        return val;
+    }
+
+    function cmToUnit(val, unit) {
+        if (!val || isNaN(val)) return 0;
+        if (unit === 'mm') return val * 10;
+        if (unit === 'in') return val / 2.54;
+        return val;
+    }
+
+    function switchCalcTab(tab) {
+        activeCalcTab = tab;
+        document.getElementById('tab-btn-rect').classList.toggle('active', tab === 'rect');
+        document.getElementById('tab-btn-round').classList.toggle('active', tab === 'round');
+        document.getElementById('calc-rect-area').classList.toggle('hidden', tab !== 'rect');
+        document.getElementById('calc-round-area').classList.toggle('hidden', tab !== 'round');
+        inputHistory = [];
+        updateCalcSummary();
+    }
+
+    function handleInput(type, field) {
+        inputHistory = inputHistory.filter(f => f !== field);
+        inputHistory.push(field);
+
+        if (type === 'rect') calculateRect();
+        else calculateRound();
+    }
+
+    function calculateRect() {
+        const w = parseFloat(document.getElementById('rect-w').value);
+        const l = parseFloat(document.getElementById('rect-l').value);
+        const h = parseFloat(document.getElementById('rect-h').value);
+        const wt = parseFloat(document.getElementById('rect-wt').value);
+        
+        const wu = document.getElementById('rect-w-unit').value;
+        const lu = document.getElementById('rect-l-unit').value;
+        const hu = document.getElementById('rect-h-unit').value;
+
+        // Condition: If all fields have values, apply priority logic
+        if (w && l && h && wt) {
+            const lastField = inputHistory[inputHistory.length - 1];
+            
+            // PRIORITY 1: Change Dimension (W, L, H) -> Update Weight
+            if (['w', 'l'].includes(lastField)) {
+                const newWt = unitToCm(w, wu) * unitToCm(l, lu) * unitToCm(h, hu);
+                document.getElementById('rect-wt').value = Math.round(newWt);
+            } 
+            // PRIORITY 2: Change Weight -> Update Height
+            else if (lastField === 'wt') {
+                const area = unitToCm(w, wu) * unitToCm(l, lu);
+                const newH = wt / area;
+                document.getElementById('rect-h').value = cmToUnit(newH, hu).toFixed(2);
+            }
+            // If H changed, let's also update Weight by default
+            else if (lastField === 'h') {
+                const newWt = unitToCm(w, wu) * unitToCm(l, lu) * unitToCm(h, hu);
+                document.getElementById('rect-wt').value = Math.round(newWt);
+            }
+        } else {
+            // Solve for any single missing field if only 3 are filled
+            solveRectMissing(['w', 'l', 'h', 'wt']);
+        }
+        updateCalcSummary();
+    }
+
+    function solveRectMissing(allFields) {
+        const vals = {
+            w: parseFloat(document.getElementById('rect-w').value),
+            l: parseFloat(document.getElementById('rect-l').value),
+            h: parseFloat(document.getElementById('rect-h').value),
+            wt: parseFloat(document.getElementById('rect-wt').value)
+        };
+        const units = {
+            w: document.getElementById('rect-w-unit').value,
+            l: document.getElementById('rect-l-unit').value,
+            h: document.getElementById('rect-h-unit').value
+        };
+
+        const filled = allFields.filter(f => !isNaN(vals[f]) && vals[f] > 0);
+        
+        if (filled.length === 3) {
+            const missing = allFields.find(f => !filled.includes(f));
+            if (missing === 'wt') {
+                const res = unitToCm(vals.w, units.w) * unitToCm(vals.l, units.l) * unitToCm(vals.h, units.h);
+                document.getElementById('rect-wt').value = Math.round(res);
+            } else if (missing === 'w') {
+                const res = vals.wt / (unitToCm(vals.l, units.l) * unitToCm(vals.h, units.h));
+                document.getElementById('rect-w').value = cmToUnit(res, units.w).toFixed(2);
+            } else if (missing === 'l') {
+                const res = vals.wt / (unitToCm(vals.w, units.w) * unitToCm(vals.h, units.h));
+                document.getElementById('rect-l').value = cmToUnit(res, units.l).toFixed(2);
+            } else if (missing === 'h') {
+                const res = vals.wt / (unitToCm(vals.w, units.w) * unitToCm(vals.l, units.l));
+                document.getElementById('rect-h').value = cmToUnit(res, units.h).toFixed(2);
+            }
+        }
+    }
+
+    function calculateRound() {
+        const d = parseFloat(document.getElementById('round-d').value);
+        const h = parseFloat(document.getElementById('round-h').value);
+        const wt = parseFloat(document.getElementById('round-wt').value);
+        const du = document.getElementById('round-d-unit').value;
+        const hu = document.getElementById('round-h-unit').value;
+
+        if (d && h && wt) {
+            const lastField = inputHistory[inputHistory.length - 1];
+            
+            // PRIORITY 1: Change Dimension (D, H) -> Update Weight
+            if (['d'].includes(lastField)) {
+                const area = Math.PI * Math.pow(unitToCm(d, du) / 2, 2);
+                document.getElementById('round-wt').value = Math.round(area * unitToCm(h, hu));
+            } 
+            // PRIORITY 2: Change Weight -> Update Height
+            else if (lastField === 'wt') {
+                const area = Math.PI * Math.pow(unitToCm(d, du) / 2, 2);
+                const newH = wt / area;
+                document.getElementById('round-h').value = cmToUnit(newH, hu).toFixed(2);
+            }
+            // If H changed, update Weight
+            else if (lastField === 'h') {
+                const area = Math.PI * Math.pow(unitToCm(d, du) / 2, 2);
+                document.getElementById('round-wt').value = Math.round(area * unitToCm(h, hu));
+            }
+        } else {
+            solveRoundMissing(['d', 'h', 'wt']);
+        }
+        updateCalcSummary();
+    }
+
+    function solveRoundMissing(allFields) {
+        const vals = {
+            d: parseFloat(document.getElementById('round-d').value),
+            h: parseFloat(document.getElementById('round-h').value),
+            wt: parseFloat(document.getElementById('round-wt').value)
+        };
+        const units = {
+            d: document.getElementById('round-d-unit').value,
+            h: document.getElementById('round-h-unit').value
+        };
+
+        const filled = allFields.filter(f => !isNaN(vals[f]) && vals[f] > 0);
+
+        if (filled.length === 2) {
+            const missing = allFields.find(f => !filled.includes(f));
+            if (missing === 'wt') {
+                const area = Math.PI * Math.pow(unitToCm(vals.d, units.d) / 2, 2);
+                document.getElementById('round-wt').value = Math.round(area * unitToCm(vals.h, units.h));
+            } else if (missing === 'h') {
+                const area = Math.PI * Math.pow(unitToCm(vals.d, units.d) / 2, 2);
+                document.getElementById('round-h').value = (vals.wt / area).toFixed(2);
+            } else if (missing === 'd') {
+                const area = vals.wt / unitToCm(vals.h, units.h);
+                const res = 2 * Math.sqrt(area / Math.PI);
+                document.getElementById('round-d').value = cmToUnit(res, units.d).toFixed(2);
+            }
+        }
+    }
+
+    function updateCalcSummary() {
+        let text = "";
+        if (activeCalcTab === 'rect') {
+            const w = document.getElementById('rect-w').value;
+            const l = document.getElementById('rect-l').value;
+            const h = document.getElementById('rect-h').value;
+            const wt = document.getElementById('rect-wt').value;
+            if (w && l && h && wt) {
+                text = `${w}${document.getElementById('rect-w-unit').value}(W) x ${l}${document.getElementById('rect-l-unit').value}(L) x ${h}${document.getElementById('rect-h-unit').value}(H) Rectangular (approx ${wt}g)`;
+            }
+        } else {
+            const d = document.getElementById('round-d').value;
+            const h = document.getElementById('round-h').value;
+            const wt = document.getElementById('round-wt').value;
+            if (d && h && wt) {
+                text = `${d}${document.getElementById('round-d-unit').value}(D) x ${h}${document.getElementById('round-h-unit').value}(H) Round (approx ${wt}g)`;
+            }
+        }
+        document.getElementById('calc-summary-preview').innerText = text || "Summary will appear here...";
+        selections.size = text;
+    }
+
+    // Step UI Logic
+    function toggleDropdown(id) {
+        const content = document.getElementById(id);
+        const arrow = document.getElementById('canvaArrow');
+        content.classList.toggle('show');
+        arrow.textContent = content.classList.contains('show') ? '▲' : '▼';
+    }
+
+    function checkOtherUsage(val) { document.getElementById('usageOther').classList.toggle('hidden', val !== 'Other'); }
+
+    function toggleBulkOptions(checked) { document.getElementById('bulkOptionsWrap').classList.toggle('hidden', !checked); selections.isBulk = checked; }
+
+    function selectMoldShape(el) {
+        selectOption(el);
+        const type = el.dataset.value;
+        document.getElementById('scallopRoundUI').classList.add('hidden');
+        document.getElementById('scallopSquareUI').classList.add('hidden');
+        document.getElementById('customShapeUI').classList.add('hidden');
+        if (type === 'Scallop Round') document.getElementById('scallopRoundUI').classList.remove('hidden');
+        else if (type === 'Scallop Square') document.getElementById('scallopSquareUI').classList.remove('hidden');
+        else if (type === 'Custom Shape') document.getElementById('customShapeUI').classList.remove('hidden');
+    }
+
+    function selectOption(el) {
+        const type = el.dataset.type;
+        document.querySelectorAll(`#cc-builder-app .option-card[data-type="${type}"]`).forEach(card => card.classList.remove('selected'));
+        el.classList.add('selected');
+        selections[type] = el.dataset.value;
+    }
+
+    function validateStep1() { if (!selections.type) { alert("Please select a Mold Shape."); return; } changeStep(2); }
+
+    function validateStep2() {
+        if (selections.type === 'Scallop Round') {
+            const val = document.getElementById('scallopRoundSize').value;
+            if (!val) { alert("Please select a size."); return; }
+            selections.size = val;
+        } else if (selections.type === 'Scallop Square') {
+            const val = document.getElementById('scallopSquareSize').value;
+            if (!val) { alert("Please select a size."); return; }
+            selections.size = val;
+        } else if (selections.type === 'Custom Shape') {
+            if (!selections.size || selections.size.includes("Summary will appear")) { alert("Please complete the dimensions in the calculator."); return; }
+        }
+        changeStep(3);
+    }
+
+    function validateStep3() { if (!selections.design) { alert("Please select your Design Status."); return; } changeStep(4); }
+
+    function changeStep(n) {
+        document.querySelectorAll('#cc-builder-app .step').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('#cc-builder-app .progress-step').forEach((p, idx) => {
+            idx + 1 <= n ? p.classList.add('active') : p.classList.remove('active');
+        });
+        document.getElementById('step' + n).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateSummary() {
+        const u = document.getElementById('usageType').value;
+        selections.usage = (u === 'Other') ? document.getElementById('usageOther').value : u;
+        selections.quantity = document.getElementById('quantity').value;
+        selections.deadline = document.getElementById('deadline').value;
+        selections.location = document.getElementById('location').value;
+        const bulkStr = selections.isBulk ? ` - [${document.getElementById('bulkType').value} Bulk]` : "";
+        
+        const summaryText = `*Custom Mold Inquiry*${bulkStr}%0A- Style: ${selections.type}%0A- Usage: ${selections.usage}%0A- Size: ${selections.size}%0A- Design: ${selections.design}%0A- Qty: ${selections.quantity}%0A- Location: ${selections.location}%0A- Deadline: ${selections.deadline || 'Flexible'}`;
+        
+        document.getElementById('summaryText').innerText = summaryText.replace(/%0A/g, '\n');
+        changeStep(6);
+    }
+
+    function copyToClipboard() {
+        const text = document.getElementById('summaryText').innerText;
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        alert("Summary copied to clipboard!");
+    }
+
+    function sendWhatsApp() {
+        const text = document.getElementById('summaryText').innerText;
+        window.open(`https://wa.me/60166664308?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function sendEmail() {
+        const text = document.getElementById('summaryText').innerText;
+        window.location.href = `mailto:hello@cookiesandcharms.com?subject=Custom Mold Inquiry&body=${encodeURIComponent(text)}`;
+    }
+</script>
+
+</body>
+</html>
