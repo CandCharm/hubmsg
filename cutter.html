@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Cutter Enquiry | Cookies & Charms</title>
+    <title>Custom Cutter Configurator | Cookies & Charms</title>
     
     <!-- MailerLite Universal -->
     <script>
@@ -25,6 +25,7 @@
             --cc-card-bg: #ffffff;
             --cc-text: #333;
             --cc-accent: #2196F3;
+            --cc-error: #d32f2f;
             
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--cc-text);
@@ -39,7 +40,7 @@
             position: relative;
         }
 
-         #cc-builder-app * {
+        #cc-builder-app * {
             box-sizing: border-box;
         }
 
@@ -61,9 +62,11 @@
             font-size: 0.9rem;
             margin-bottom: 25px;
             border: 1px solid rgba(23, 77, 113, 0.2);
+            transition: 0.2s;
         }
+        #cc-builder-app .guide-link-top:hover { background: #c5e5ff; }
 
-        /* Progress Bar */
+        /* Progress Bar - Updated to 7 steps */
         #cc-builder-app .progress-container {
             display: flex;
             justify-content: space-between;
@@ -102,7 +105,8 @@
 
         /* Grid Selection */
         #cc-builder-app .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
-         #cc-builder-app .option-card {
+        
+        #cc-builder-app .option-card {
             border: 2px solid #eee;
             border-radius: 15px;
             overflow: hidden;
@@ -115,52 +119,44 @@
             flex-direction: column;
             align-items: center;
         }
-        #cc-builder-app .option-card img { width: 100%; height: 200px; object-fit: contain; background: #f0f0f0; display: block; pointer-events: none; }
-        #cc-builder-app .option-card .label { padding: 10px; font-size: 0.85rem; font-weight: 600; color: #555; line-height: 1.2; pointer-events: none; }
+        #cc-builder-app .option-card img { 
+            width: 100%; height: 250px; object-fit: contain; background: #ffffff; 
+            display: block; pointer-events: none;
+        }
+        #cc-builder-app .option-card .label { 
+            padding: 12px; font-size: 0.95rem; font-weight: 600; color: #555; 
+            line-height: 1.2; pointer-events: none; border-top: 1px solid #f5f5f5;
+            width: 100%; background: #fafafa;
+        }
         #cc-builder-app .option-card:hover { border-color: var(--cc-accent); }
         #cc-builder-app .option-card.selected { border-color: var(--cc-primary); background: var(--cc-primary-light); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        #cc-builder-app .option-card.selected .label { color: var(--cc-primary); }
+        #cc-builder-app .option-card.selected .label { color: var(--cc-primary); background: var(--cc-primary-light); border-top-color: rgba(23, 77, 113, 0.1); }
 
         /* Inputs */
         #cc-builder-app .input-group { margin-bottom: 20px; }
         #cc-builder-app .input-group label { display: block; font-size: 0.9rem; font-weight: bold; margin-bottom: 8px; color: var(--cc-primary); }
         #cc-builder-app input[type="text"], 
         #cc-builder-app input[type="number"], 
-        #cc-builder-app select, 
-        #cc-builder-app textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            outline: none;
+        #cc-builder-app select {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; transition: 0.2s;
         }
+        #cc-builder-app input:focus, #cc-builder-app select:focus { border-color: var(--cc-primary); box-shadow: 0 0 0 3px rgba(23, 77, 113, 0.1); }
 
         #cc-builder-app .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 10px; padding: 12px; background: #fff;
+            border: 1px solid #ddd; border-radius: 10px; cursor: pointer; transition: 0.2s;
         }
+        #cc-builder-app .checkbox-group:hover { background: #f9f9f9; }
 
+        /* Info Boxes */
         #cc-builder-app .info-box {
-            background: var(--cc-primary-light);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            border: 1px solid rgba(23, 77, 113, 0.1);
+            background: var(--cc-primary-light); padding: 15px; border-radius: 12px;
+            margin-bottom: 20px; display: flex; align-items: flex-start; gap: 15px; border: 1px solid rgba(23, 77, 113, 0.1);
         }
         #cc-builder-app .info-box.vertical { flex-direction: column; align-items: center; text-align: center; }
-        #cc-builder-app .info-box img { border-radius: 8px; object-fit: contain; background: white; flex-shrink: 0; }
+        #cc-builder-app .info-box img { border-radius: 8px; object-fit: contain; background: white; flex-shrink: 0; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         #cc-builder-app .info-box.horizontal img { width: 80px; height: 80px; }
-        #cc-builder-app .info-box.vertical img { width: auto; max-width: 70%; max-height: 200px; height: auto; }
+        #cc-builder-app .info-box.vertical img { width: auto; max-width: 80%; max-height: 300px; height: auto; }
         #cc-builder-app .info-box p { margin: 0; font-size: 0.85rem; line-height: 1.4; color: var(--cc-primary-dark); }
 
         /* Accordion Style */
@@ -169,38 +165,48 @@
         #cc-builder-app .dropdown-content { padding: 15px; display: none; background: white; border-top: 1px solid #eee; }
         #cc-builder-app .dropdown-content.show { display: block; }
 
-        #cc-builder-app .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+        /* Inquiry List / Basket Styles */
+        #cc-builder-app .inquiry-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        #cc-builder-app .inquiry-item { 
+            background: #fff; border: 2px solid var(--cc-primary-light); padding: 15px; 
+            border-radius: 12px; display: flex; justify-content: space-between; align-items: center; 
+        }
+        #cc-builder-app .inquiry-details { font-size: 0.9rem; line-height: 1.4; }
+        #cc-builder-app .inquiry-details strong { color: var(--cc-primary); font-size: 1.05rem; display: block; margin-bottom: 3px;}
+        #cc-builder-app .btn-remove { 
+            background: #ffebee; color: var(--cc-error); border: none; padding: 8px 15px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; 
+        }
+        #cc-builder-app .btn-remove:hover { background: #ffcdd2; }
+
+        /* Buttons & Validation */
+        #cc-builder-app .validation-msg {
+            color: var(--cc-error); font-size: 0.85rem; font-weight: bold; text-align: center;
+            margin-bottom: 10px; min-height: 20px;
+        }
+        #cc-builder-app .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
         #cc-builder-app .btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 1rem;
-            transition: 0.2s;
+            flex: 1; min-width: 120px; padding: 15px; border-radius: 12px; font-weight: bold;
+            cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
+            gap: 8px; font-size: 1rem; transition: 0.2s;
         }
         #cc-builder-app .btn-next { background: var(--cc-primary); color: white; }
+        #cc-builder-app .btn-next:disabled { background: #ccc; color: #888; cursor: not-allowed; box-shadow: none; }
+        #cc-builder-app .btn-next:not(:disabled):hover { background: var(--cc-primary-dark); }
+        
         #cc-builder-app .btn-back { background: #eee; color: #666; }
+        #cc-builder-app .btn-back:hover { background: #ddd; }
+        
         #cc-builder-app .btn-whatsapp { background: #25D366; color: white; }
         #cc-builder-app .btn-email { background: #EA4335; color: white; }
-        #cc-builder-app .btn-copy  { background: var(--cc-primary); color: white; }
-        #cc-builder-app .btn:hover { filter: brightness(90%); }
+        #cc-builder-app .btn-copy { background: #555; color: white; }
+        #cc-builder-app .btn-add { background: var(--cc-primary-light); color: var(--cc-primary); border: 2px solid var(--cc-primary); width: 100%; margin-top: 15px;}
+        #cc-builder-app .btn-add:hover { background: #c5e5ff; }
 
         #cc-builder-app .summary-area {
-            background: #f9f9f9;
-            border: 1px dashed #ccc;
-            padding: 20px;
-            border-radius: 15px;
-            white-space: pre-wrap;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            background: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 15px;
+            white-space: pre-wrap; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;
+            max-height: 400px; overflow-y: auto;
         }
 
         #cc-builder-app .multi-inputs { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
@@ -208,6 +214,7 @@
         
         #cc-builder-app .hidden { display: none; }
         #cc-builder-app .disabled-text { color: #999; font-style: italic; font-weight: normal; }
+        #cc-builder-app .reset-link { text-align: center; display: block; margin-top: 20px; font-size: 0.8rem; color: #999; text-decoration: underline; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -221,7 +228,7 @@
         <p>Let us know what you want make</p>
     </div>
 
-    <a href="https://cookiesandcharms.com/pages/custom-your-cookie-cutter" target="_blank" class="guide-link-top">📖 Click here for Full Custom Guide & Info</a>
+    <a href="https://cookiesandcharms.com/pages/custom-your-cookie-cutter" target="_blank" class="guide-link-top">📖 Click here for Full Custom Guide & More Info</a>
 
     <div class="progress-container">
         <div class="progress-line"></div>
@@ -231,6 +238,7 @@
         <div class="progress-step" id="p4">4</div>
         <div class="progress-step" id="p5">5</div>
         <div class="progress-step" id="p6">6</div>
+        <div class="progress-step" id="p7">7</div>
     </div>
 
     <!-- SECTION 1: CUTTER TYPE -->
@@ -239,13 +247,13 @@
         
         <div class="input-group">
             <label>Part 1: I am using it with...</label>
-            <select id="usageType" onchange="checkOtherUsage(this.value)">
+            <select id="usageType" onchange="updateState('usage', this.value)">
                 <option value="Cookie Dough">Cookie Dough</option>
                 <option value="Fondant">Fondant</option>
                 <option value="Clay">Clay</option>
                 <option value="Other">Others (Please state)</option>
             </select>
-            <input type="text" id="usageOther" placeholder="Please specify usage..." class="hidden" style="margin-top:10px;">
+            <input type="text" id="usageOther" placeholder="Please specify usage..." class="hidden" style="margin-top:10px;" oninput="updateState('usageOther', this.value)">
         </div>
 
         <label><strong>Part 2: Select Cutter Style</strong></label>
@@ -276,10 +284,7 @@
             </div>
         </div>
 
-        <label><strong>Part 3: Material Option</strong></label>
-		<div class="info-box">
-             <p>💡 Standard Cutter is Made with food contact safe plastic polymer. Dishwasher safe up to 60C.</p>
-        </div>
+        <h2>Part 3: Material Option</h2>
         <div class="info-box vertical">
             <img src="https://cdn.store-assets.com/s/520532/f/15421865.jpg" alt="Metal">
             <p><strong>Metal Option:</strong> Oven safe stainless steel. <em>Only available for <strong>Outline Cutter</strong> and <strong>cutter with Inner Cutout</strong>.</em></p>
@@ -287,16 +292,16 @@
         <div class="input-group">
             <div id="metalCheckboxWrap">
                 <label class="checkbox-group" id="metalLabel">
-                    <input type="checkbox" id="isMetal"> I would like this to be a <strong>Metal Cutter</strong>
+                    <input type="checkbox" id="isMetal" onchange="updateState('isMetal', this.checked)"> I would like this to be a <strong>Metal Cutter</strong>
                 </label>
             </div>
             <p id="metalUnavailableMsg" class="hidden disabled-text">Material option unavailable for the selected style.</p>
         </div>
 
-        <label><strong>Part 4: Arrangement</strong></label>
+        <h2>Part 4: Arrangement</h2>
         <div class="input-group">
             <label class="checkbox-group">
-                <input type="checkbox" id="isMulti" onchange="toggleMultiCutter(this.checked)"> This is a Multi-Cutter
+                <input type="checkbox" id="isMulti" onchange="updateState('isMulti', this.checked)"> This is a Multi-Cutter
             </label>
             
             <div id="multiDetails" class="hidden" style="margin-top:15px;">
@@ -306,16 +311,17 @@
                     <p>Combine multiple shapes into one frame for faster cutting.</p>
                 </div>
                 <div class="multi-inputs">
-                    <input type="number" id="rows" value="1" min="1">
+                    <input type="number" id="rows" value="1" min="1" oninput="updateState('rows', this.value)">
                     <span>Rows  x </span>
-                    <input type="number" id="cols" value="1" min="1">
+                    <input type="number" id="cols" value="1" min="1" oninput="updateState('cols', this.value)">
                     <span>Cols</span>
                 </div>
             </div>
         </div>
 
+        <div class="validation-msg" id="valMsg1"></div>
         <div class="btn-row">
-            <button class="btn btn-next" onclick="validateStep1()">Next: Sizing →</button>
+            <button class="btn btn-next" id="btnNext1" onclick="changeStep(2)">Next: Sizing →</button>
         </div>
     </div>
 
@@ -334,79 +340,34 @@
         </div>
         <div class="input-group">
             <label>Input ideal size (longest side):</label>
-            <input type="text" id="cutterSize" value="7.5cm">
+            <input type="text" id="cutterSize" value="7.5cm" oninput="updateState('size', this.value)">
         </div>
+        <div class="validation-msg" id="valMsg2"></div>
         <div class="btn-row">
             <button class="btn btn-back" onclick="changeStep(1)">Back</button>
-            <button class="btn btn-next" onclick="changeStep(3)">Next: Design →</button>
+            <button class="btn btn-next" id="btnNext2" onclick="changeStep(3)">Next: Quantity →</button>
         </div>
     </div>
 
-    <!-- SECTION 3: DESIGN -->
+    <!-- SECTION 3: QUANTITY & SAVE TO LIST -->
     <div class="step" id="step3">
-        <h2>Section 3: Design</h2>
-        <div class="info-box vertical">
-            <img src="https://cdn.store-assets.com/s/520532/f/13064808.png" alt="Blackwhite">
-            <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred.</p>
-            <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
-            <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
-            <img src="https://cdn.store-assets.com/s/520532/f/14159576.png" alt="1mm">
-            <p>Make sure the design line thickness is not too fine and thin ( <strong>minimum 1mm for imprint embosser, 0.5mm for 3d pop embosser</strong>), this is to ensure design will hold its shape after baking.</p>
-        </div>
-        <div class="dropdown-container">
-            <div class="dropdown-header" onclick="toggleDropdown('canvaDropdown')">
-                <span>🎨 Use Canva Template</span>
-                <span id="canvaArrow">▼</span>
-            </div>
-            <div class="dropdown-content" id="canvaDropdown">
-                <div class="ml-embedded" data-form="a4ICiE"></div>
-            </div>
-        </div>
-        
-        <label><strong>Design Availability:</strong></label>
-        <div class="options-grid">
-            <div class="option-card" data-type="design" data-value="I have B&W image" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/16878073.png" alt="B&W Image">
-                <div class="label">Mono/ B&W Digital Image (Best)</div>
-            </div>
-            <div class="option-card" data-type="design" data-value="I have Hand drawn sketch" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/16877968.png" alt="Sketch">
-                <div class="label">Hand Drawn Sketch</div>
-            </div>
-            <div class="option-card" data-type="design" data-value="I have an Image" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/12744351.jpg" alt="Photo">
-                <div class="label">Clear straight Top Down Photo</div>
-            </div>
-            <div class="option-card" data-type="design" data-value="I have a Logo" onclick="selectOption(this)">
-                <img src="https://cdn.store-assets.com/s/520532/f/15214093.png" alt="Help">
-                <div class="label">Logo</div>
-            </div>
-        </div>
-        <div class="btn-row">
-            <button class="btn btn-back" onclick="changeStep(2)">Back</button>
-            <button class="btn btn-next" onclick="validateStep3()">Next: Quantity →</button>
-        </div>
-    </div>
-
-    <!-- SECTION 4: QUANTITY -->
-    <div class="step" id="step4">
-        <h2>Section 4: Quantity</h2>
+        <h2>Section 3: Quantity</h2>
         
         <div class="input-group">
             <label>Sets/Pieces needed:</label>
-            <input type="number" id="quantity" value="1" min="1">
+            <input type="number" id="quantity" value="1" min="1" oninput="updateState('quantity', this.value)">
         </div>
 
         <div class="input-group">
             <label class="checkbox-group">
-                <input type="checkbox" id="isBulk" onchange="toggleBulkOptions(this.checked)"> I am looking for Wholesale / Workshop / Corporate Gift
+                <input type="checkbox" id="isBulk" onchange="updateState('isBulk', this.checked)"> I am looking for Wholesale / Workshop / Corporate Gift
             </label>
         </div>
 
         <div id="bulkOptionsWrap" class="hidden">
             <div class="input-group">
                 <label>Please specify the usage for bulk purchase:</label>
-                <select id="bulkType">
+                <select id="bulkType" onchange="updateState('bulkType', this.value)">
                     <option value="Wholesale">Wholesale (For Resale)</option>
                     <option value="Workshop">Workshop Use</option>
                     <option value="Corporate Gift">Corporate Gift</option>
@@ -418,97 +379,208 @@
             </div>
         </div>
 
+        <div class="validation-msg" id="valMsg3"></div>
         <div class="btn-row">
-            <button class="btn btn-back" onclick="changeStep(3)">Back</button>
-            <button class="btn btn-next" onclick="changeStep(5)">Next: Shipping →</button>
+            <button class="btn btn-back" onclick="changeStep(2)">Back</button>
+            <button class="btn btn-next" id="btnNext3" onclick="saveItemToList()">Save Cutter to Enquiry List →</button>
         </div>
     </div>
 
-    <!-- SECTION 5: SHIPPING -->
-    <div class="step" id="step5">
-        <h2>Section 5: Shipping</h2>
-        <div class="input-group">
-            <label>Location:</label>
-            <input type="text" id="location" placeholder="e.g. KL, Malaysia">
+    <!-- SECTION 4: INQUIRY LIST / BASKET -->
+    <div class="step" id="step4">
+        <h2>Section 4: Your Enquiry List</h2>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Review the cutters you have configured so far. You can add more cutters to request everything in one quote.</p>
+        
+        <div id="inquiryListContainer" class="inquiry-list">
+            <!-- Items injected here by JavaScript -->
         </div>
-        <div class="info-box">
+
+        <button class="btn btn-add" onclick="startNewItem()">➕ Add Another Cutter </button>
+
+        <div class="validation-msg" id="valMsg4" style="margin-top: 20px;"></div>
+        <div class="btn-row">
+            <button class="btn btn-next" id="btnNext4" onclick="changeStep(5)">Next: Design →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 5: GLOBAL DESIGN -->
+    <div class="step" id="step5">
+        <h2>Section 5: Design</h2>
+        <div class="info-box vertical">
+            <p><strong>Below is a guide on types of design to share and best practices. Share your design together with your enquiry to us.</strong></p>
+			<img src="https://cdn.store-assets.com/s/520532/f/13064808.png" alt="Blackwhite">
+            <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred.</p>
+            <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
+            <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
+            <img src="https://cdn.store-assets.com/s/520532/f/14159576.png" alt="1mm">
+            <p>Make sure the design line thickness is not too fine and thin ( <strong>minimum 1mm for imprint embosser, 0.5mm for 3d pop embosser</strong>), this is to ensure design will hold its shape during baking.</p>
+        </div>
+        <div class="dropdown-container">
+            <div class="dropdown-header" onclick="toggleDropdown('canvaDropdown')">
+                <span>🎨 Use Canva Template</span>
+                <span id="canvaArrow">▼</span>
+            </div>
+            <div class="dropdown-content" id="canvaDropdown">
+                <div class="ml-embedded" data-form="a4ICiE"></div>
+            </div>
+        </div>
+        
+        <label><strong>Design Availability (For this Order):</strong></label>
+        <div class="options-grid">
+            <div class="option-card" data-type="design" data-value="Mono/ B&W Digital Image" onclick="selectDesignOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/16878073.png" alt="B&W Image">
+                <div class="label">Mono/ B&W Digital Image (Best)</div>
+            </div>
+            <div class="option-card" data-type="design" data-value="I have Hand drawn sketch" onclick="selectDesignOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/16877968.png" alt="Sketch">
+                <div class="label">Hand Drawn Sketch</div>
+            </div>
+            <div class="option-card" data-type="design" data-value="I have an Image" onclick="selectDesignOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/12744351.jpg" alt="Photo">
+                <div class="label">Clear straight Top Down Image</div>
+            </div>
+            <div class="option-card" data-type="design" data-value="I have a Logo" onclick="selectDesignOption(this)">
+                <img src="https://cdn.store-assets.com/s/520532/f/15214093.png" alt="Help">
+                <div class="label">Logo</div>
+            </div>
+        </div>
+        
+        <div class="validation-msg" id="valMsg5"></div>
+        <div class="btn-row">
+            <button class="btn btn-back" onclick="changeStep(4)">Back to List</button>
+            <button class="btn btn-next" id="btnNext5" onclick="changeStep(6)">Next: Shipping →</button>
+        </div>
+    </div>
+
+    <!-- SECTION 6: SHIPPING -->
+    <div class="step" id="step6">
+        <h2>Section 6: Shipping& Details</h2>
+        <div class="input-group">
+            <label>Name & Company:</label>
+            <input type="text" id="Name" placeholder="e.g. Anna, Anna Bakery">
+        </div>
+        <div class="input-group">
+            <label>Receiver Location:</label>
+            <input type="text" id="location" placeholder="e.g. KL, Malaysia" oninput="updateGlobal('location', this.value)">
+        </div>
+		<div class="info-box">
              <p>💡 Pick Up is available upon request at PJ and KL Malaysia.</p>
-        </div>		
+        </div>
         <div class="input-group">
             <label>Deadline:</label>
-            <input type="text" id="deadline" placeholder="e.g. 20th Oct">
+            <input type="text" id="deadline" placeholder="e.g. 20th Oct" oninput="updateGlobal('deadline', this.value)">
         </div>
         <div class="info-box">
              <p>💡 Standard Lead time is 2-4 working days, Rush order subject to availability</p>
 			 <p>Large volume and metal cutter have longer lead time.</p>
         </div>	
+        <div class="validation-msg" id="valMsg6"></div>
         <div class="btn-row">
-            <button class="btn btn-back" onclick="changeStep(4)">Back</button>
-            <button class="btn btn-next" onclick="generateSummary()">Review →</button>
+            <button class="btn btn-back" onclick="changeStep(5)">Back</button>
+            <button class="btn btn-next" id="btnNext6" onclick="generateSummary()">Generate Final Summary →</button>
         </div>
     </div>
 
-    <!-- SECTION 6: SUMMARY -->
-    <div class="step" id="step6">
+    <!-- SECTION 7: SUMMARY -->
+    <div class="step" id="step7">
         <h2>Final Summary</h2>
-        <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Copy this summary and send it to us via WhatsApp or Email with your design to get your quote.</p>
-		<p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Price and Lead time depends on details given.</p>
+        <p>Copy this summary and send it to us via WhatsApp or Email with your design to get your quote.</p>
+        <p> Price and Lead time depends on details given.</p>
+
+
         <div class="summary-area" id="summaryText"></div>
+
         <div class="btn-row">
             <button class="btn btn-copy" onclick="copyToClipboard()">Copy Summary</button>
             <button class="btn btn-whatsapp" onclick="sendWhatsApp()">WhatsApp</button>
             <button class="btn btn-email" onclick="sendEmail()">Email Inquiry</button>
         </div>
-        <button class="btn btn-back" style="width:100%; margin-top:10px;" onclick="changeStep(5)">Back to Edit</button>
+        <button class="btn btn-back" style="width:100%; margin-top:10px;" onclick="changeStep(6)">Back </button>
+        
+        <a class="reset-link" onclick="resetApp()">Start completely fresh (Clear memory)</a>
     </div>
 </div>
 
 <script>
-    let selections = {
-        usage: '', 
-        type: '', 
-        design: '', 
-        isMulti: false,
-        rows: 1, 
-        cols: 1, 
-        size: '7.5cm', 
-        isMetal: false,
-        quantity: 1, 
-        isBulk: false,
-        bulkType: '',
-        deadline: '', 
-        location: ''
+    // State Management Architecture
+    let appState = {
+        items: [], // Array to hold completed items
+        currentItem: {
+            usage: 'Cookie Dough',
+            usageOther: '',
+            type: '',
+            isMetal: false,
+            isMulti: false,
+            rows: 1,
+            cols: 1,
+            size: '7.5cm',
+            quantity: 1,
+            isBulk: false,
+            bulkType: 'Wholesale'
+        },
+        global: {
+            design: '',
+            location: '',
+            deadline: ''
+        }
     };
 
-    function toggleDropdown(id) {
-        const content = document.getElementById(id);
-        const arrow = document.getElementById('canvaArrow');
-        content.classList.toggle('show');
-        arrow.textContent = content.classList.contains('show') ? '▲' : '▼';
+    // Load from LocalStorage on Boot
+    document.addEventListener("DOMContentLoaded", () => {
+        const saved = localStorage.getItem('cc_config_state');
+        if (saved) {
+            try {
+                appState = JSON.parse(saved);
+                renderUIFromState();
+            } catch(e) { console.error("Error parsing save data"); }
+        }
+        renderInquiryList();
+        runValidation(); 
+    });
+
+    function saveState() {
+        localStorage.setItem('cc_config_state', JSON.stringify(appState));
     }
 
-    function checkOtherUsage(val) {
-        document.getElementById('usageOther').classList.toggle('hidden', val !== 'Other');
+    function resetApp() {
+        if(confirm("Are you sure you want to clear your current progress and start fresh?")) {
+            localStorage.removeItem('cc_config_state');
+            location.reload();
+        }
     }
 
-    function toggleMultiCutter(checked) {
-        document.getElementById('multiDetails').classList.toggle('hidden', !checked);
-        selections.isMulti = checked;
+    // Updates state and triggers UI/Validation refresh
+    function updateState(key, value) {
+        appState.currentItem[key] = value;
+        
+        if (key === 'usage') document.getElementById('usageOther').classList.toggle('hidden', value !== 'Other');
+        if (key === 'isMulti') document.getElementById('multiDetails').classList.toggle('hidden', !value);
+        if (key === 'isBulk') document.getElementById('bulkOptionsWrap').classList.toggle('hidden', !value);
+        
+        saveState();
+        runValidation();
     }
 
-    function toggleBulkOptions(checked) {
-        document.getElementById('bulkOptionsWrap').classList.toggle('hidden', !checked);
-        selections.isBulk = checked;
+    function updateGlobal(key, value) {
+        appState.global[key] = value;
+        saveState();
+        runValidation();
     }
 
+    // Handlers for specific complex selections
     function selectCutterStyle(el) {
-        selectOption(el);
         const val = el.dataset.value;
+        appState.currentItem.type = val;
+
+        // Visual selection
+        document.querySelectorAll(`#cc-builder-app .option-card[data-type="type"]`).forEach(card => card.classList.remove('selected'));
+        el.classList.add('selected');
+
+        // Metal Logic
         const metalAllowed = (val === 'Outline Cutter Only' || val === 'Cutter with Inner Cutout');
         const label = document.getElementById('metalLabel');
         const msg = document.getElementById('metalUnavailableMsg');
-        const checkbox = document.getElementById('isMetal');
-
+        
         if (metalAllowed) {
             label.style.opacity = '1';
             label.style.pointerEvents = 'auto';
@@ -516,34 +588,192 @@
         } else {
             label.style.opacity = '0.4';
             label.style.pointerEvents = 'none';
-            checkbox.checked = false; 
+            appState.currentItem.isMetal = false;
+            document.getElementById('isMetal').checked = false;
             msg.classList.remove('hidden');
         }
+
+        saveState();
+        runValidation();
     }
 
-    function selectOption(el) {
-        const type = el.dataset.type;
-        document.querySelectorAll(`#cc-builder-app .option-card[data-type="${type}"]`).forEach(card => {
-            card.classList.remove('selected');
-        });
+    function selectDesignOption(el) {
+        const val = el.dataset.value;
+        appState.global.design = val; // Design is now Global
+        
+        document.querySelectorAll(`#cc-builder-app .option-card[data-type="design"]`).forEach(card => card.classList.remove('selected'));
         el.classList.add('selected');
-        selections[type] = el.dataset.value;
+        
+        saveState();
+        runValidation();
     }
 
-    function validateStep1() {
-        if (!selections.type) {
-            alert("Please select a Cutter Style.");
-            return;
-        }
-        changeStep(2);
-    }
-
-    function validateStep3() {
-        if (!selections.design) {
-            alert("Please select your Design Status.");
-            return;
-        }
+    // List Management Logic
+    function saveItemToList() {
+        // Push current item to array
+        appState.items.push(JSON.parse(JSON.stringify(appState.currentItem)));
+        saveState();
+        renderInquiryList();
+        
+        // Move to list view
         changeStep(4);
+    }
+
+    function startNewItem() {
+        // Keep usage and size to save time, clear the specific product choices
+        appState.currentItem.type = '';
+        appState.currentItem.isMetal = false;
+        appState.currentItem.isMulti = false;
+        appState.currentItem.quantity = 1;
+        appState.currentItem.isBulk = false;
+
+        // Reset UI for the new item
+        document.querySelectorAll('#cc-builder-app .option-card[data-type="type"]').forEach(c => c.classList.remove('selected'));
+        document.getElementById('isMetal').checked = false;
+        document.getElementById('isMulti').checked = false;
+        document.getElementById('quantity').value = 1;
+        document.getElementById('isBulk').checked = false;
+        
+        document.getElementById('metalLabel').style.opacity = '1';
+        document.getElementById('metalLabel').style.pointerEvents = 'auto';
+        document.getElementById('metalUnavailableMsg').classList.add('hidden');
+        document.getElementById('multiDetails').classList.add('hidden');
+        document.getElementById('bulkOptionsWrap').classList.add('hidden');
+
+        saveState();
+        runValidation();
+        changeStep(1);
+    }
+
+    function removeItem(index) {
+        if(confirm("Remove this item from your enquiry?")) {
+            appState.items.splice(index, 1);
+            saveState();
+            renderInquiryList();
+        }
+    }
+
+    function renderInquiryList() {
+        const container = document.getElementById('inquiryListContainer');
+        container.innerHTML = '';
+
+        if (appState.items.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#666; padding: 20px;">No cutters added yet. Click below to add one.</p>';
+        } else {
+            appState.items.forEach((item, index) => {
+                const materialStr = item.isMetal ? ' (Metal)' : '';
+                const multiStr = item.isMulti ? ` [${item.rows}x${item.cols} Multi]` : '';
+                container.innerHTML += `
+                    <div class="inquiry-item">
+                        <div class="inquiry-details">
+                            <strong>Item ${index + 1}: ${item.type}${materialStr}${multiStr}</strong>
+                            Size: ${item.size} | Qty: ${item.quantity}
+                        </div>
+                        <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
+                    </div>
+                `;
+            });
+        }
+        runValidation(); // Re-validate step 4
+    }
+
+    // Sync HTML fields with Javascript State (on load)
+    function renderUIFromState() {
+        const c = appState.currentItem;
+        const g = appState.global;
+
+        // Step 1
+        document.getElementById('usageType').value = c.usage;
+        if(c.usage === 'Other') {
+            document.getElementById('usageOther').classList.remove('hidden');
+            document.getElementById('usageOther').value = c.usageOther;
+        }
+        if(c.type) {
+            document.querySelectorAll(`#cc-builder-app .option-card[data-type="type"]`).forEach(card => {
+                if(card.dataset.value === c.type) selectCutterStyle(card);
+            });
+        }
+        document.getElementById('isMetal').checked = c.isMetal;
+        document.getElementById('isMulti').checked = c.isMulti;
+        if(c.isMulti) document.getElementById('multiDetails').classList.remove('hidden');
+        document.getElementById('rows').value = c.rows;
+        document.getElementById('cols').value = c.cols;
+
+        // Step 2
+        document.getElementById('cutterSize').value = c.size;
+
+        // Step 3
+        document.getElementById('quantity').value = c.quantity;
+        document.getElementById('isBulk').checked = c.isBulk;
+        if(c.isBulk) document.getElementById('bulkOptionsWrap').classList.remove('hidden');
+        document.getElementById('bulkType').value = c.bulkType;
+
+        // Global Design & Shipping
+        if(g.design) {
+            document.querySelectorAll(`#cc-builder-app .option-card[data-type="design"]`).forEach(card => {
+                if(card.dataset.value === g.design) card.classList.add('selected');
+            });
+        }
+        document.getElementById('location').value = g.location || '';
+        document.getElementById('deadline').value = g.deadline || '';
+    }
+
+    // Validation Logic (Greys out buttons if requirements aren't met)
+    function runValidation() {
+        const c = appState.currentItem;
+        const g = appState.global;
+        
+        // Step 1: Type
+        const btn1 = document.getElementById('btnNext1');
+        const msg1 = document.getElementById('valMsg1');
+        if (!c.type) {
+            btn1.disabled = true; msg1.innerText = "Please select a Cutter Style to continue.";
+        } else {
+            btn1.disabled = false; msg1.innerText = "";
+        }
+
+        // Step 2: Size
+        const btn2 = document.getElementById('btnNext2');
+        const msg2 = document.getElementById('valMsg2');
+        if (!c.size || c.size.trim() === '') {
+            btn2.disabled = true; msg2.innerText = "Please enter a size.";
+        } else {
+            btn2.disabled = false; msg2.innerText = "";
+        }
+
+        // Step 3: Quantity
+        const btn3 = document.getElementById('btnNext3');
+        const msg3 = document.getElementById('valMsg3');
+        if (c.quantity < 1) {
+            btn3.disabled = true; msg3.innerText = "Quantity must be at least 1.";
+        } else {
+            btn3.disabled = false; msg3.innerText = "";
+        }
+
+        // Step 4: Inquiry List Review
+        const btn4 = document.getElementById('btnNext4');
+        const msg4 = document.getElementById('valMsg4');
+        if (appState.items.length === 0) {
+            btn4.disabled = true; msg4.innerText = "Please add at least one cutter to your list.";
+        } else {
+            btn4.disabled = false; msg4.innerText = "";
+        }
+
+        // Step 5: Global Design
+        const btn5 = document.getElementById('btnNext5');
+        const msg5 = document.getElementById('valMsg5');
+        if (!g.design) {
+            btn5.disabled = true; msg5.innerText = "Please select your Design Availability to continue.";
+        } else {
+            btn5.disabled = false; msg5.innerText = "";
+        }
+    }
+
+    function toggleDropdown(id) {
+        const content = document.getElementById(id);
+        const arrow = document.getElementById('canvaArrow');
+        content.classList.toggle('show');
+        arrow.textContent = content.classList.contains('show') ? '▲' : '▼';
     }
 
     function changeStep(n) {
@@ -556,34 +786,34 @@
     }
 
     function generateSummary() {
-        const u = document.getElementById('usageType').value;
-        selections.usage = (u === 'Other') ? document.getElementById('usageOther').value : u;
-        selections.size = document.getElementById('cutterSize').value;
-        selections.isMetal = document.getElementById('isMetal').checked;
-        selections.quantity = document.getElementById('quantity').value;
-        selections.deadline = document.getElementById('deadline').value;
-        selections.location = document.getElementById('location').value;
-        selections.rows = document.getElementById('rows').value;
-        selections.cols = document.getElementById('cols').value;
-        selections.isBulk = document.getElementById('isBulk').checked;
-        selections.bulkType = selections.isBulk ? document.getElementById('bulkType').value : 'Standard';
-
-        const materialStr = selections.isMetal ? " (Metal Material)" : " (Standard Plastic)";
-        const multiStr = selections.isMulti ? ` (${selections.rows}x${selections.cols} Multi-frame)` : "";
-        const bulkStr = selections.isBulk ? ` - [${selections.bulkType} Bulk]` : "";
-
-        const summaryText = 
-            `*Custom Cutter Inquiry*${bulkStr}%0A` +
-            `- Style: ${selections.type}${materialStr}${multiStr}%0A` +
-            `- Usage: ${selections.usage}%0A` +
-            `- Size: ${selections.size}%0A` +
-            `- Design: ${selections.design}%0A` +
-            `- Qty: ${selections.quantity}%0A` +
-            `- Location: ${selections.location}%0A` +
-            `- Deadline: ${selections.deadline || 'Flexible'}`;
+        let summaryText = `I am Looking for Custom Cutter`;
+		
+		// Add Global Info
+        summaryText +=  `Order Details%0A` +
+					   `- Name: ${appState.global.Name || 'TBD'}%0A` +
+                       `- Design Status: ${appState.global.design}%0A` +
+                       `- Location: ${appState.global.location || 'TBD'}%0A` +
+                       `- Deadline: ${appState.global.deadline || 'Flexible'}%0A%0A` +
+                       `Note: I will share the design(s) in the message.%0A%0A`;
         
+        // Loop through basket
+        appState.items.forEach((item, index) => {
+            const u = (item.usage === 'Other') ? item.usageOther : item.usage;
+            const materialStr = item.isMetal ? " (Metal Material)" : " (Standard Plastic)";
+            const multiStr = item.isMulti ? ` (${item.rows}x${item.cols} Multi-frame)` : "";
+            const bulkStr = item.isBulk ? ` - [${item.bulkType} Bulk]` : "";
+
+            summaryText += `Cutter ${index + 1} %0A` +
+                           `- Style: ${item.type}${materialStr}${multiStr}%0A` +
+                           `- Usage: ${u}%0A` +
+                           `- Size: ${item.size}%0A` +
+                           `- Quantity: ${item.quantity} ${bulkStr}%0A%0A`;
+        });
+
+        
+
         document.getElementById('summaryText').innerText = summaryText.replace(/%0A/g, '\n');
-        changeStep(6);
+        changeStep(7);
     }
 
     function copyToClipboard() {
@@ -603,7 +833,7 @@
 
     function sendWhatsApp() {
         const text = document.getElementById('summaryText').innerText;
-        const businessPhone = "60166664308"; 
+        const businessPhone = "60166664308"; // Extracted from user's Cake HTML
         window.open(`https://wa.me/${businessPhone}?text=${encodeURIComponent(text)}`, '_blank');
     }
 

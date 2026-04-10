@@ -449,7 +449,8 @@
     <div class="step" id="step5">
         <h2>Section 5: Design</h2>
         <div class="info-box vertical">
-            <img src="https://cdn.store-assets.com/s/520532/f/13169389.png" alt="Blackwhite">
+            <p><strong>Below is a guide on types of design to share and best practices. Share your design together with your enquiry to us.</strong></p>
+			<img src="https://cdn.store-assets.com/s/520532/f/13169389.png" alt="Blackwhite">
             <p><strong>Tip:</strong> Digital High contrast Mono color / B&W preferred. (This design selection will apply to your entire inquiry list).</p>
             <p>Below is a sample of NOT an ideal image, as it is 1. blurred image, and 2. slanted image.</p>
             <img src="https://cdn.store-assets.com/s/520532/f/13064788.png" alt="slanted">
@@ -910,10 +911,11 @@
         globalSelections.deadline = document.getElementById('deadline').value;
         
         let summaryText = `I am Looking for Custom Mooncake Mold%0A%0A`;
-        
+        summaryText += `Note: I will share the design(s) in the message.%0A%0A`;
         summaryText += `--Order Details --%0A`;
         summaryText += `- Name: ${globalSelections.Name || 'Not provided'}%0A`;
         summaryText += `- Design: ${globalSelections.design}%0A`;
+		
         summaryText += `- Location: ${globalSelections.location || 'Not provided'}%0A`;
         summaryText += `- Deadline: ${globalSelections.deadline || 'Flexible'}%0A%0A`;
         
